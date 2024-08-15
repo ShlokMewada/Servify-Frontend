@@ -15,7 +15,7 @@ export const checkValidDataSignUp = (name, username, email, password) => {
   let passwordMsg = "";
   let emailMsg = "";
 
-  if (isEmailValid && isPasswordValid) {
+  if (isEmailValid && isPasswordValid && isNameValid && isUserNameValid) {
     return { nameMsg, passwordMsg, emailMsg };
   } else {
     if (!isUserNameValid) {
