@@ -3,8 +3,13 @@ import { addToCart, removeFromCart } from "../utils/cartSlice";
 import { useState } from "react";
 
 const ServiceCard = ({ serviceData, itemState }) => {
-  const { service_pic, service_name, service_details, service_price } =
-    serviceData;
+  const {
+    service_pic,
+    service_name,
+    service_details,
+    service_price,
+    quantity,
+  } = serviceData;
   const dispatch = useDispatch();
 
   const handleAddToCart = () => {
@@ -70,16 +75,27 @@ const ServiceCard = ({ serviceData, itemState }) => {
               </div>
             )
           ) : (
-            <button
-              onClick={handleRemoveFromCart}
-              className="flex-1 bg-red-500 hover:bg-red-600 text-white border-2 border-red-500 hover:border-red-600 rounded-lg py-2 transition-all duration-200 flex items-center justify-center gap-x-2"
-            >
-              <i className="fa-solid fa-trash"></i> Remove
+            <div className="flex items-center gap-x-2">
+              <button
+                onClick={() => handleAddMinus(false)}
+                className="bg-gray-300 hover:bg-gray-400 text-gray-800 font-semibold rounded-full w-8 h-8 flex items-center justify-center transition-all duration-200"
+              >
+                <i className="fa-solid fa-minus"></i>
+              </button>
+              <span className="text-lg font-semibold">{quantity}</span>
+              <button
+                onClick={() => handleAddMinus(true)}
+                className="bg-gray-300 hover:bg-gray-400 text-gray-800 font-semibold rounded-full w-8 h-8 flex items-center justify-center transition-all duration-200"
+              >
+                <i className="fa-solid fa-plus"></i>
+              </button>
+            </div>
+          )}
+          {itemState && (
+            <button className="flex-1 bg-yellow-500 hover:bg-yellow-600 text-white border-2 border-yellow-500 hover:border-yellow-600 rounded-lg py-2 transition-all duration-200">
+              Purchase
             </button>
           )}
-          <button className="flex-1 bg-yellow-500 hover:bg-yellow-600 text-white border-2 border-yellow-500 hover:border-yellow-600 rounded-lg py-2 transition-all duration-200">
-            Purchase
-          </button>
         </div>
       </div>
     </div>

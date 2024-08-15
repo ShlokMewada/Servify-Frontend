@@ -9,12 +9,26 @@ const cartSlice = createSlice({
 
   reducers: {
     addToCart: (state, action) => {
-      state.cart.push(action.payload);
+      const existingItem = state.cart.find(
+        (item) => item.service_name === action.payload.service_name
+      );
+      if (existingItem) {
+        existingItem.quantity += 1;
+      } else {
+        state.cart.push({ ...action.payload, quantity: 1 });
+      }
     },
     removeFromCart: (state, action) => {
-      state.cart = state.cart.filter(
-        (cartItem) => cartItem.service_name !== action.payload
+      const existingItem = state.cart.find(
+        (item) => item.service_name === action.payload
       );
+      if (existingItem.quantity > 1) {
+        existingItem.quantity -= 1;
+      } else {
+        state.cart = state.cart.filter(
+          (item) => item.service_name !== action.payload
+        );
+      }
     },
     clearCart: (state) => {
       state.cart.length = 0;
