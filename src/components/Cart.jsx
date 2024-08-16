@@ -44,7 +44,10 @@ const Cart = () => {
                     <span className="text-lg font-medium text-gray-700">
                       {service.service_name}{" "}
                       <span className="text-sm text-gray-500">
-                        x{service.quantity}
+                        <i className="fa-solid fa-xmark"></i>
+                      </span>
+                      <span className="text-md text-gray-500">
+                        {service.quantity}
                       </span>
                     </span>
                     <span className="text-lg font-semibold text-indigo-600">
