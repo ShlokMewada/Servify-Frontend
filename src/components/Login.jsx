@@ -1,6 +1,8 @@
 import axios from "axios";
 import { useRef, useState } from "react";
 import { checkValidDataSignUp, checkValidDataSignIn } from "../utils/validate";
+import GoogleAuth from "./GoogleAuth";
+import { GoogleOAuthProvider } from "@react-oauth/google";
 
 const Login = () => {
   const name = useRef();
@@ -159,6 +161,9 @@ const Login = () => {
           >
             {isSignIn ? "Sign Up now." : "Sign In now."}
           </div>
+        </div>
+        <div>
+          <GoogleAuth />
         </div>
       </form>
     </div>

@@ -21,3 +21,5 @@ export const GRID_IMG5 =
 
 export const GRID_IMG6 =
   "https://res.cloudinary.com/urbanclap/image/upload/t_high_res_category/w_56,dpr_1,fl_progressive:steep,q_auto:low,f_auto,c_limit/images/growth/luminosity/1705340729734-0a23f7.jpeg";
+
+export const CLIENT_ID = import.meta.env.VITE_GOOGLE_CLIENT_ID;
