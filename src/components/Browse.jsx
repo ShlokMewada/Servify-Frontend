@@ -1,8 +1,18 @@
 import servicePic from "../assets/vo5tj29l.png";
+import {
+  GRID_IMG1,
+  GRID_IMG2,
+  GRID_IMG3,
+  GRID_IMG4,
+  GRID_IMG5,
+  GRID_IMG6,
+  HOME_IMG1,
+  HOME_IMG2,
+} from "../utils/constants";
 
 const Browse = () => {
   return (
-    <div className="w-full pt-10">
+    <div className="w-full pt-36">
       <div className="w-10/12 mx-auto p-10 flex justify-between relative">
         <h1 className="text-4xl font-semibold">
           Home services at your
@@ -10,16 +20,8 @@ const Browse = () => {
         </h1>
         <div className="flex gap-x-2">
           <div className="flex flex-col gap-y-2">
-            <img
-              src="https://res.cloudinary.com/urbanclap/image/upload/t_high_res_template/w_233,dpr_1,fl_progressive:steep,q_auto:low,f_auto,c_limit/images/growth/home-screen/1681371120474-301f47.jpeg"
-              alt=""
-              className="rounded-tl-lg"
-            />
-            <img
-              src="https://res.cloudinary.com/urbanclap/image/upload/t_high_res_template/w_233,dpr_1,fl_progressive:steep,q_auto:low,f_auto,c_limit/images/growth/luminosity/1652168690740-f5ed68.png"
-              alt=""
-              className="rounded-bl-lg"
-            />
+            <img src={HOME_IMG1} alt="" className="rounded-tl-lg" />
+            <img src={HOME_IMG2} alt="" className="rounded-bl-lg" />
           </div>
           <img src={servicePic} alt="" className="w-[230px]" />
         </div>
@@ -28,59 +30,51 @@ const Browse = () => {
             What are you looking for?
           </h1>
           <div className="grid grid-cols-3 mt-6 gap-y-7">
-            <div className="flex flex-col items-center justify-center gap-y-2">
-              <div className="bg-[#F5F5F5] w-[130px] flex justify-center items-center py-3 px-7 rounded-lg">
-                <img
-                  src="https://res.cloudinary.com/urbanclap/image/upload/t_high_res_category/w_56,dpr_1,fl_progressive:steep,q_auto:low,f_auto,c_limit/images/supply/customer-app-supply/1678864013225-bfc1de.jpeg"
-                  alt=""
-                />
+            <div className="flex flex-col items-center justify-center gap-y-2 group hover:opactiy-80 cursor-pointer">
+              <div className="bg-[#F5F5F5] w-[130px] flex justify-center items-center py-3 px-7 rounded-lg group-hover:opacity-80">
+                <img src={GRID_IMG1} alt="" />
               </div>
-              <p className="text-xs">{"Women's Salon & Spa"}</p>
+              <p className="text-xs group-hover:opacity-80">
+                {"Women's Salon & Spa"}
+              </p>
             </div>
-            <div className="flex flex-col items-center justify-center gap-y-2">
-              <div className="bg-[#F5F5F5] w-[130px] flex justify-center items-center py-3 px-7 rounded-lg">
-                <img
-                  src="https://res.cloudinary.com/urbanclap/image/upload/t_high_res_category/w_56,dpr_1,fl_progressive:steep,q_auto:low,f_auto,c_limit/images/growth/luminosity/1710241114433-5cfa7c.jpeg"
-                  alt=""
-                />
+            <div className="flex flex-col items-center justify-center gap-y-2 group hover:opactiy-80 cursor-pointer">
+              <div className="bg-[#F5F5F5] w-[130px] flex justify-center items-center py-3 px-7 rounded-lg group-hover:opacity-80">
+                <img src={GRID_IMG2} alt="" />
               </div>
-              <p className="text-xs">{"Men's Salon & Massage"}</p>
+              <p className="text-xs group-hover:opacity-80">
+                {"Men's Salon & Massage"}
+              </p>
             </div>
-            <div className="flex flex-col items-center justify-center gap-y-2">
-              <div className="bg-[#F5F5F5] w-[130px] flex justify-center items-center py-3 px-7 rounded-lg">
-                <img
-                  src="https://res.cloudinary.com/urbanclap/image/upload/t_high_res_category/w_56,dpr_1,fl_progressive:steep,q_auto:low,f_auto,c_limit/images/growth/home-screen/1679292077307-6143d7.jpeg"
-                  alt=""
-                />
+            <div className="flex flex-col items-center justify-center gap-y-2 group hover:opactiy-80 cursor-pointer">
+              <div className="bg-[#F5F5F5] w-[130px] flex justify-center items-center py-3 px-7 rounded-lg group-hover:opacity-80">
+                <img src={GRID_IMG3} alt="" />
               </div>
-              <p className="text-xs">{"AC & Appliance Repair"}</p>
+              <p className="text-xs group-hover:opacity-80">
+                {"AC & Appliance Repair"}
+              </p>
             </div>
-            <div className="flex flex-col items-center justify-center gap-y-2">
-              <div className="bg-[#F5F5F5] w-[130px] flex justify-center items-center py-3 px-7 rounded-lg">
-                <img
-                  src="https://res.cloudinary.com/urbanclap/image/upload/t_high_res_category/w_56,dpr_1,fl_progressive:steep,q_auto:low,f_auto,c_limit/images/growth/home-screen/1681711961404-75dfec.jpeg"
-                  alt=""
-                />
+            <div className="flex flex-col items-center justify-center gap-y-2 group hover:opactiy-80 cursor-pointer">
+              <div className="bg-[#F5F5F5] w-[130px] flex justify-center items-center py-3 px-7 rounded-lg group-hover:opacity-80">
+                <img src={GRID_IMG4} alt="" />
               </div>
-              <p className="text-xs">{"Cleaning"}</p>
+              <p className="text-xs group-hover:opacity-80">{"Cleaning"}</p>
             </div>
-            <div className="flex flex-col items-center justify-center gap-y-2">
-              <div className="bg-[#F5F5F5] w-[130px] flex justify-center items-center py-3 px-7 rounded-lg">
-                <img
-                  src="https://res.cloudinary.com/urbanclap/image/upload/t_high_res_category/w_56,dpr_1,fl_progressive:steep,q_auto:low,f_auto,c_limit/images/growth/luminosity/1658402794135-faf080.png"
-                  alt=""
-                />
+            <div className="flex flex-col items-center justify-center gap-y-2 group hover:opactiy-80 cursor-pointer">
+              <div className="bg-[#F5F5F5] w-[130px] flex justify-center items-center py-3 px-7 rounded-lg group-hover:opacity-80">
+                <img src={GRID_IMG5} alt="" />
               </div>
-              <p className="text-xs">{"Electrician, Plumber & Carpenter"}</p>
+              <p className="text-xs group-hover:opacity-80">
+                {"Electrician, Plumber & Carpenter"}
+              </p>
             </div>
-            <div className="flex flex-col items-center justify-center gap-y-2">
-              <div className="bg-[#F5F5F5] w-[130px] flex justify-center items-center py-3 px-7 rounded-lg">
-                <img
-                  src="https://res.cloudinary.com/urbanclap/image/upload/t_high_res_category/w_56,dpr_1,fl_progressive:steep,q_auto:low,f_auto,c_limit/images/growth/luminosity/1705340729734-0a23f7.jpeg"
-                  alt=""
-                />
+            <div className="flex flex-col items-center justify-center gap-y-2 group hover:opactiy-80 cursor-pointer">
+              <div className="bg-[#F5F5F5] w-[130px] flex justify-center items-center py-3 px-7 rounded-lg group-hover:opacity-80">
+                <img src={GRID_IMG6} alt="" />
               </div>
-              <p className="text-xs">{"Water Purifer"}</p>
+              <p className="text-xs group-hover:opacity-80">
+                {"Water Purifer"}
+              </p>
             </div>
           </div>
         </div>
