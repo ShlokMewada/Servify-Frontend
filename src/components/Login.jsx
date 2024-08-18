@@ -187,9 +187,11 @@ const Login = () => {
           <GoogleAuth isSignIn={isSignIn} role={role} />
         </div>
         <div className="flex my-6 gap-x-1">
-          {isSignIn ? <p>New to Servify?</p> : <p>Already a user?</p>}
+          <p className="font-semibold">
+            {isSignIn ? "New to Servify?" : "Already a user?"}
+          </p>
           <div
-            className="hover:underline cursor-pointer"
+            className="hover:underline cursor-pointer font-semibold"
             onClick={toggleSignInForm}
           >
             {isSignIn ? "Sign Up now." : "Sign In now."}
