@@ -9,6 +9,7 @@ const Login = () => {
   const username = useRef();
   const email = useRef();
   const password = useRef();
+  const [role, setRole] = useState("User");
   const [nameErrorMsg, setNameErrorMsg] = useState();
   const [userNameErrorMsg, setUserNameErrorMsg] = useState();
   const [emailErrorMsg, setEmailErrorMsg] = useState();
@@ -20,7 +21,8 @@ const Login = () => {
     setIsSignIn(!isSignIn);
   };
 
-  const handleSubmit = async (role) => {
+  const handleSubmit = async () => {
+    // console.log(role); <<Role Check Console Log>>
     if (!isSignIn) {
       const message = checkValidDataSignUp(
         name.current.value,
@@ -130,6 +132,37 @@ const Login = () => {
           ref={password}
         />
         <p className="text-red-400">{passwordErrorMsg}</p>
+        <div className="flex items-center gap-x-5">
+          <p className="text-lg font-semibold">
+            {isSignIn ? "SignIn as:" : "SignUp as:"}
+          </p>
+          <label className="flex items-center cursor-pointer gap-x-2">
+            <span className="text-lg font-semibold">User:</span>
+            <input
+              type="radio"
+              name="role"
+              value="User"
+              onChange={() => {
+                setRole("User");
+              }}
+              defaultChecked
+              className="form-radio h-5 w-5 text-indigo-600"
+            />
+          </label>
+
+          <label className="flex items-center cursor-pointer gap-x-2">
+            <span className="text-lg font-semibold">Employee:</span>
+            <input
+              type="radio"
+              name="role"
+              value="Employee"
+              onClick={() => {
+                setRole("Employee");
+              }}
+              className="form-radio h-5 w-5 text-indigo-600"
+            />
+          </label>
+        </div>
         {isSignIn ? (
           <button
             className="bg-blue-500 p-2 rounded-lg mx-auto w-1/3 hover:bg-blue-400 font-semibold text-lg"
@@ -140,19 +173,19 @@ const Login = () => {
         ) : (
           <div className="flex gap-x-5">
             <button
-              className="bg-blue-500 p-2 rounded-lg mx-auto w-2/3 hover:bg-blue-400 font-semibold text-lg"
-              onClick={() => handleSubmit("user")}
+              className="bg-blue-500 p-2 rounded-lg mx-auto w-1/3 hover:bg-blue-400 font-semibold text-lg"
+              onClick={handleSubmit}
             >
-              Sign Up as User
-            </button>
-            <button
-              className="bg-blue-500 p-2 rounded-lg mx-auto w-2/3 hover:bg-blue-400 font-semibold text-lg"
-              onClick={() => handleSubmit("employee")}
-            >
-              Sign Up as Employee
+              Sign Up
             </button>
           </div>
         )}
+        <div className="flex flex-col gap-y-2 items-center">
+          <p className="font-semibold">
+            {isSignIn ? "SignIn Using Google:" : "SignUp Using Google:"}
+          </p>
+          <GoogleAuth isSignIn={isSignIn} role={role} />
+        </div>
         <div className="flex my-6 gap-x-1">
           {isSignIn ? <p>New to Servify?</p> : <p>Already a user?</p>}
           <div
@@ -161,9 +194,6 @@ const Login = () => {
           >
             {isSignIn ? "Sign Up now." : "Sign In now."}
           </div>
-        </div>
-        <div>
-          <GoogleAuth />
         </div>
       </form>
     </div>
