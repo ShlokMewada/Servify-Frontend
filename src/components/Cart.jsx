@@ -1,6 +1,7 @@
 import { useDispatch, useSelector } from "react-redux";
 import ServiceCard from "./ServiceCard";
 import { clearCart } from "../utils/cartSlice";
+import { Link } from "react-router-dom";
 
 const Cart = () => {
   const cart = useSelector((store) => store.cart.cart);
@@ -14,8 +15,8 @@ const Cart = () => {
   let totalPrice = 0;
 
   return (
-    <div className="min-h-screen bg-gray-50">
-      <h1 className="text-5xl text-center font-extrabold text-gray-800 mt-12">
+    <div className="min-h-screen bg-gray-50 pt-12">
+      <h1 className="text-5xl text-center font-extrabold text-gray-800">
         Your Cart
       </h1>
       {cart.length > 0 ? (
@@ -85,9 +86,14 @@ const Cart = () => {
           </div>
         </>
       ) : (
-        <p className="text-xl text-gray-500 mt-10 text-center">
-          Your cart is empty.
-        </p>
+        <div className="flex flex-col items-center gap-y-2">
+          <p className="text-xl text-gray-500 mt-10 text-center">
+            Your cart is empty.
+          </p>
+          <button className="bg-black rounded-lg text-white hover:bg-opacity-80 px-8 py-2">
+            <Link to="/">Home</Link>
+          </button>
+        </div>
       )}
     </div>
   );
