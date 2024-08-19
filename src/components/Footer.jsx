@@ -48,7 +48,7 @@ const Footer = () => {
         </div>
         <div className="w-full h-[1px] bg-gray-300"></div>
         <div className="flex items-baseline gap-x-1 mt-5">
-          <i className="fa-regular fa-copyright fa-xs"></i>
+          <i className="fa-regular fa-copyright fa-2xs"></i>
           <p className="text-xs text-gray-600">
             Copyright 2024 Servify. All rights reserved.
           </p>
