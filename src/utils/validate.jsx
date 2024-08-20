@@ -59,3 +59,31 @@ export const checkValidDataSignIn = (email, password) => {
     return { passwordMsg, emailMsg };
   }
 };
+
+export const checkValidDataContact = (name, email, phoneNo) => {
+  const isNameValid = /^[a-zA-Z]+ [a-zA-Z]+$/.test(name);
+  const isEmailValid = /^([a-zA-Z0-9._%-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,})$/.test(
+    email
+  );
+  const isPhoneNoValid = /^[0-9]{10}$/.test(phoneNo);
+
+  let nameMsg = "";
+  let emailMsg = "";
+  let phoneNoMsg = "";
+
+  if (isEmailValid && isNameValid && isPhoneNoValid) {
+    return { nameMsg, emailMsg, isPhoneNoValid };
+  } else {
+    if (!isNameValid) {
+      nameMsg = "Name is not valid!";
+    }
+    if (!isEmailValid) {
+      emailMsg = "Email ID is not valid!";
+    }
+    if (!isPhoneNoValid) {
+      phoneNoMsg = "Phone no. is not valid";
+    }
+
+    return { nameMsg, emailMsg, phoneNoMsg };
+  }
+};

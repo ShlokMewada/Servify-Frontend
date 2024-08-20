@@ -11,14 +11,18 @@ const Footer = () => {
         <div className="flex justify-between">
           <ul className="flex flex-col gap-y-1">
             <li className="text-lg font-bold mb-3">Company</li>
-            <li className="text-gray-600 text-sm">About Us</li>
+            <li className="text-gray-600 text-sm">
+              <Link to="/about">About Us</Link>
+            </li>
             <li className="text-gray-600 text-sm">Terms & Conditions</li>
             <li className="text-gray-600 text-sm">Privacy Policy</li>
           </ul>
           <ul className="flex flex-col gap-y-1">
             <li className="text-lg font-bold mb-3">For Customers</li>
             <li className="text-gray-600 text-sm">Categories near you</li>
-            <li className="text-gray-600 text-sm">Contact Us</li>
+            <li className="text-gray-600 text-sm">
+              <Link to="/contact">Contact Us</Link>
+            </li>
           </ul>
           <ul className="flex flex-col gap-y-1">
             <li className="text-lg font-bold mb-3">For Partners</li>
