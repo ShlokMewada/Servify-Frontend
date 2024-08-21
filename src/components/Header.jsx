@@ -30,7 +30,9 @@ const Header = () => {
         </div>
         <ul className="flex gap-x-5 items-center">
           <li className="font-semibold text-xl cursor-pointer border-2 flex items-center justify-center w-9 h-9 rounded-full">
-            <i className="fa-solid fa-user"></i>
+            <Link to="/userprofile">
+              <i className="fa-solid fa-user"></i>
+            </Link>
           </li>
           <li className="font-semibold text-xl cursor-pointer">
             <Link to="/">Home</Link>

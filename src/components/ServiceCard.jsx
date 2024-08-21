@@ -91,11 +91,6 @@ const ServiceCard = ({ serviceData, itemState }) => {
               </button>
             </div>
           )}
-          {itemState && (
-            <button className="flex-1 bg-yellow-500 hover:bg-yellow-600 text-white border-2 border-yellow-500 hover:border-yellow-600 rounded-lg py-2 transition-all duration-200">
-              Purchase
-            </button>
-          )}
         </div>
       </div>
     </div>

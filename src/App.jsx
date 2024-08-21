@@ -4,6 +4,7 @@ import Cart from "./components/Cart";
 import Login from "./components/Login";
 import About from "./components/About";
 import Contact from "./components/Contact";
+import UserProfile from "./components/UserProfile";
 
 const App = () => {
   const appRouter = createBrowserRouter([
@@ -26,6 +27,10 @@ const App = () => {
     {
       path: "/contact",
       element: <Contact />,
+    },
+    {
+      path: "/userprofile",
+      element: <UserProfile />,
     },
   ]);
   return (
