@@ -1,6 +1,5 @@
 import { useDispatch, useSelector } from "react-redux";
 import { addToCart, removeFromCart, viewService } from "../utils/cartSlice";
-import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 const ServiceCard = ({ serviceData, itemState }) => {
