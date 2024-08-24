@@ -1,16 +1,16 @@
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { addToCart, removeFromCart, viewService } from "../utils/cartSlice";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 const ServiceCard = ({ serviceData, itemState }) => {
-  const {
-    service_pic,
-    service_name,
-    service_details,
-    service_price,
-    quantity,
-  } = serviceData;
+  const cartItems = useSelector((store) => store.cart.cart);
+  const currentItem = cartItems.find(
+    (item) => item.service_name === serviceData.service_name
+  );
+  const cartQuantity = currentItem ? currentItem.quantity : 0;
+  const { service_pic, service_name, service_details, service_price } =
+    serviceData;
   const dispatch = useDispatch();
 
   const navigate = useNavigate();
@@ -22,24 +22,15 @@ const ServiceCard = ({ serviceData, itemState }) => {
 
   const handleAddToCart = () => {
     dispatch(addToCart(serviceData));
-    setCountAdd(countAdd + 1);
   };
 
   const handleAddMinus = (operation) => {
     if (operation) {
       dispatch(addToCart(serviceData));
-      setCountAdd(countAdd + 1);
     } else {
       dispatch(removeFromCart(service_name));
-      setCountAdd(countAdd - 1);
     }
   };
-
-  const handleRemoveFromCart = () => {
-    dispatch(removeFromCart(service_name));
-  };
-
-  const [countAdd, setCountAdd] = useState(0);
 
   return (
     <div className="w-[280px] flex flex-col justify-between border-2 border-gray-300 rounded-lg hover:shadow-lg transition-all duration-300 transform hover:-translate-y-1 hover:scale-105">
@@ -58,7 +49,7 @@ const ServiceCard = ({ serviceData, itemState }) => {
         <p className="text-md font-bold text-indigo-600">₹{service_price}</p>
         <div className="flex gap-x-2 mt-4">
           {itemState ? (
-            countAdd === 0 ? (
+            cartQuantity === 0 ? (
               <button
                 onClick={handleAddToCart}
                 className="flex-1 bg-green-500 hover:bg-green-600 text-white border-2 border-green-500 hover:border-green-600 rounded-lg py-2 transition-all duration-200 flex items-center justify-center gap-x-2"
@@ -73,7 +64,7 @@ const ServiceCard = ({ serviceData, itemState }) => {
                 >
                   <i className="fa-solid fa-minus"></i>
                 </button>
-                <span className="text-lg font-semibold">{countAdd}</span>
+                <span className="text-lg font-semibold">{cartQuantity}</span>
                 <button
                   onClick={() => handleAddMinus(true)}
                   className="bg-gray-300 hover:bg-gray-400 text-gray-800 font-semibold rounded-full w-8 h-8 flex items-center justify-center transition-all duration-200"
@@ -90,7 +81,7 @@ const ServiceCard = ({ serviceData, itemState }) => {
               >
                 <i className="fa-solid fa-minus"></i>
               </button>
-              <span className="text-lg font-semibold">{quantity}</span>
+              <span className="text-lg font-semibold">{cartQuantity}</span>
               <button
                 onClick={() => handleAddMinus(true)}
                 className="bg-gray-300 hover:bg-gray-400 text-gray-800 font-semibold rounded-full w-8 h-8 flex items-center justify-center transition-all duration-200"
