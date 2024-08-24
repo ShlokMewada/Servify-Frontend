@@ -1,29 +1,13 @@
-// import { useSelector } from "react-redux";
-
-// const CategoryDetails = () => {
-//   const category = useSelector((store) => store.cart.viewServiceCategory);
-//   console.log(category);
-//   return <div></div>;
-// };
-
-// export default CategoryDetails;
-
 import React from "react";
 import { useSelector } from "react-redux";
-import ServiceCard from "./ServiceCard";
 import { useNavigate } from "react-router-dom";
 
 const CategoryDetails = () => {
-  const category = useSelector((store) => store.cart.viewServiceCategory);
+  const category = useSelector((store) => store.service.viewServiceCategory);
 
-  const { category_pic, category_name, category_details } = category;
-  console.log(category);
+  const { image_url, name, description } = category;
 
   const navigate = useNavigate();
-
-  const goToCart = () => {
-    navigate("/cart");
-  };
 
   return (
     <div className="w-10/12 mx-auto min-h-screen py-8">
@@ -31,8 +15,8 @@ const CategoryDetails = () => {
         {/* Column 1: Service Image */}
         <div className="flex flex-col space-y-8">
           <img
-            src={category_pic}
-            alt={category_name}
+            src={image_url}
+            alt={name}
             className="w-full h-56 object-cover rounded-lg shadow-md"
           />
 
@@ -58,12 +42,8 @@ const CategoryDetails = () => {
 
         {/* Column 2: Service Title and Description */}
         <div className="flex flex-col col-span-2 space-y-6">
-          <h1 className="text-4xl font-extrabold text-gray-800 mb-4">
-            {category_name}
-          </h1>
-          <p className="text-gray-600 text-lg leading-relaxed">
-            {category_details}
-          </p>
+          <h1 className="text-4xl font-extrabold text-gray-800 mb-4">{name}</h1>
+          <p className="text-gray-600 text-lg leading-relaxed">{description}</p>
         </div>
       </div>
     </div>

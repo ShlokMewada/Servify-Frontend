@@ -1,15 +1,13 @@
 import { useDispatch, useSelector } from "react-redux";
-import { addToCart, removeFromCart, viewService } from "../utils/cartSlice";
+import { addToCart, removeFromCart } from "../utils/cartSlice";
+import { viewService } from "../utils/serviceSlice";
 import { useNavigate } from "react-router-dom";
 
 const ServiceCard = ({ serviceData, itemState }) => {
   const cartItems = useSelector((store) => store.cart.cart);
-  const currentItem = cartItems.find(
-    (item) => item.service_name === serviceData.service_name
-  );
+  const currentItem = cartItems.find((item) => item.name === serviceData.name);
   const cartQuantity = currentItem ? currentItem.quantity : 0;
-  const { service_pic, service_name, service_details, service_price } =
-    serviceData;
+  const { image_url, name, description, price } = serviceData;
   const dispatch = useDispatch();
 
   const navigate = useNavigate();
@@ -27,7 +25,7 @@ const ServiceCard = ({ serviceData, itemState }) => {
     if (operation) {
       dispatch(addToCart(serviceData));
     } else {
-      dispatch(removeFromCart(service_name));
+      dispatch(removeFromCart(name));
     }
   };
 
@@ -35,17 +33,17 @@ const ServiceCard = ({ serviceData, itemState }) => {
     <div className="w-[280px] flex flex-col justify-between border-2 border-gray-300 rounded-lg hover:shadow-lg transition-all duration-300 transform hover:-translate-y-1 hover:scale-105">
       <div className="w-full h-32 bg-gray-200 flex items-center justify-center rounded-t-lg overflow-hidden">
         <img
-          src={service_pic}
-          alt={service_name}
+          src={image_url}
+          alt={name}
           className="w-full h-full object-cover"
         />
       </div>
       <div className="flex flex-col gap-y-2 p-4">
         <h1 className="text-lg font-semibold text-gray-800 min-h-[50px] flex items-center">
-          {service_name}
+          {name}
         </h1>
-        <p className="text-sm text-gray-600">{service_details}</p>
-        <p className="text-md font-bold text-indigo-600">₹{service_price}</p>
+        <p className="text-sm text-gray-600">{description}</p>
+        <p className="text-md font-bold text-indigo-600">₹{price}</p>
         <div className="flex gap-x-2 mt-4">
           {itemState ? (
             cartQuantity === 0 ? (

@@ -1,6 +1,6 @@
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { viewServiceCategory } from "../utils/cartSlice";
+import { viewServiceCategory } from "../utils/serviceSlice";
 
 const CategoryCard = ({ category }) => {
   const dispatch = useDispatch();
@@ -16,13 +16,13 @@ const CategoryCard = ({ category }) => {
     >
       <div className="transition-all duration-300 transform hover:scale-105">
         <img
-          src={category.service_pic}
+          src={category.image_url}
           alt="Category"
           className="w-40 h-40 object-cover rounded-md transition-transform duration-300"
         />
       </div>
       <h3 className="mt-2 text-center text-lg font-semibold text-gray-700">
-        {category.service_name}
+        {category.name}
       </h3>
     </div>
   );

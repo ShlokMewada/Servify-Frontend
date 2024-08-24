@@ -24,7 +24,7 @@ const Cart = () => {
           <div className="flex flex-wrap gap-6 justify-center mt-12 px-6">
             {cart.map((service) => (
               <ServiceCard
-                key={service.service_name}
+                key={service.id}
                 serviceData={service}
                 itemState={false}
               />
@@ -39,11 +39,11 @@ const Cart = () => {
               <div className="space-y-3">
                 {cart.map((service) => (
                   <div
-                    key={service.service_name}
+                    key={service.id}
                     className="flex justify-between items-center border-b pb-2"
                   >
                     <span className="text-lg font-medium text-gray-700">
-                      {service.service_name}{" "}
+                      {service.name}{" "}
                       <span className="text-sm text-gray-500">
                         <i className="fa-solid fa-xmark"></i>
                       </span>
@@ -52,10 +52,10 @@ const Cart = () => {
                       </span>
                     </span>
                     <span className="text-lg font-semibold text-indigo-600">
-                      ₹{service.service_price * service.quantity}
+                      ₹{service.price * service.quantity}
                     </span>
                     <p className="hidden">
-                      {(totalPrice += service.service_price * service.quantity)}
+                      {(totalPrice += service.price * service.quantity)}
                     </p>
                   </div>
                 ))}

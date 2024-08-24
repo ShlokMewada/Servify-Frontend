@@ -4,13 +4,13 @@ import ServiceCard from "./ServiceCard";
 import { useNavigate } from "react-router-dom";
 
 const ServiceDetails = () => {
-  const service = useSelector((store) => store.cart);
+  const serviceInCart = useSelector((store) => store.cart);
+  const viewService = useSelector((store) => store.service.viewService);
 
-  const { service_pic, service_name, service_details, service_price } =
-    service.viewService;
+  const { image_url, name, description, price } = viewService;
 
-  const serviceItem = service.cart.filter(
-    (service) => service.service_name === service_name
+  const serviceItem = serviceInCart.cart.filter(
+    (service) => service.name === name
   )[0];
 
   const navigate = useNavigate();
@@ -25,8 +25,8 @@ const ServiceDetails = () => {
         {/* Column 1: Service Image */}
         <div className="flex flex-col space-y-8">
           <img
-            src={service_pic}
-            alt={service_name}
+            src={image_url}
+            alt={name}
             className="w-full h-56 object-cover rounded-lg shadow-md"
           />
 
@@ -52,12 +52,8 @@ const ServiceDetails = () => {
 
         {/* Column 2: Service Title and Description */}
         <div className="flex flex-col col-span-2 space-y-6">
-          <h1 className="text-4xl font-extrabold text-gray-800 mb-4">
-            {service_name}
-          </h1>
-          <p className="text-gray-600 text-lg leading-relaxed">
-            {service_details}
-          </p>
+          <h1 className="text-4xl font-extrabold text-gray-800 mb-4">{name}</h1>
+          <p className="text-gray-600 text-lg leading-relaxed">{description}</p>
         </div>
 
         {/* Column 3: Cart Section */}
@@ -66,7 +62,7 @@ const ServiceDetails = () => {
           {serviceItem ? (
             <>
               <ServiceCard
-                key={serviceItem.service_name}
+                key={serviceItem.name}
                 serviceData={serviceItem}
                 itemState={false}
               />
