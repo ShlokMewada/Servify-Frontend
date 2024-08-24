@@ -5,6 +5,7 @@ import Login from "./components/Login";
 import About from "./components/About";
 import Contact from "./components/Contact";
 import UserProfile from "./components/UserProfile";
+import ServiceDetails from "./components/ServiceDetails";
 
 const App = () => {
   const appRouter = createBrowserRouter([
@@ -31,6 +32,10 @@ const App = () => {
     {
       path: "/userprofile",
       element: <UserProfile />,
+    },
+    {
+      path: "/servicedetails",
+      element: <ServiceDetails />,
     },
   ]);
   return (

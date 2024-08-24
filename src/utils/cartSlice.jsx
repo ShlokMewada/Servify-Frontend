@@ -5,6 +5,7 @@ const cartSlice = createSlice({
 
   initialState: {
     cart: [],
+    viewService: null,
   },
 
   reducers: {
@@ -33,9 +34,13 @@ const cartSlice = createSlice({
     clearCart: (state) => {
       state.cart.length = 0;
     },
+    viewService: (state, action) => {
+      state.viewService = action.payload;
+    },
   },
 });
 
-export const { addToCart, removeFromCart, clearCart } = cartSlice.actions;
+export const { addToCart, removeFromCart, clearCart, viewService } =
+  cartSlice.actions;
 
 export default cartSlice.reducer;

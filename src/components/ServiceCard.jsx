@@ -1,6 +1,7 @@
 import { useDispatch } from "react-redux";
-import { addToCart, removeFromCart } from "../utils/cartSlice";
+import { addToCart, removeFromCart, viewService } from "../utils/cartSlice";
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 const ServiceCard = ({ serviceData, itemState }) => {
   const {
@@ -11,6 +12,13 @@ const ServiceCard = ({ serviceData, itemState }) => {
     quantity,
   } = serviceData;
   const dispatch = useDispatch();
+
+  const navigate = useNavigate();
+
+  const goToServiceDetails = () => {
+    dispatch(viewService(serviceData));
+    navigate("/servicedetails");
+  };
 
   const handleAddToCart = () => {
     dispatch(addToCart(serviceData));
@@ -90,6 +98,14 @@ const ServiceCard = ({ serviceData, itemState }) => {
                 <i className="fa-solid fa-plus"></i>
               </button>
             </div>
+          )}
+          {itemState && (
+            <button
+              onClick={goToServiceDetails}
+              className="flex-1 bg-blue-500 hover:bg-blue-600 text-white border-2 border-blue-500 hover:border-blue-600 rounded-lg py-2 transition-all duration-200 flex items-center justify-center gap-x-2"
+            >
+              Details
+            </button>
           )}
         </div>
       </div>

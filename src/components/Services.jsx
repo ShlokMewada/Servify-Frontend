@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
 import ServiceCard from "./ServiceCard";
+import CategoryCard from "./CategoryCard";
 const Services = () => {
   //     const [data, setData] = useState([]);
   //     const getServices = async () => {
@@ -46,14 +47,49 @@ const Services = () => {
       <h1 className="text-5xl text-center font-extrabold text-gray-800 mt-12">
         Our Services
       </h1>
-      <div className="flex gap-x-4 mt-10">
-        {services.map((service) => (
-          <ServiceCard
-            key={service.service_name}
-            serviceData={service}
-            itemState={true}
-          />
-        ))}
+      <div className="flex flex-col gap-y-6 mt-8">
+        <h2 className="text-4xl font-bold text-gray-800">Categories</h2>
+        <div className="flex">
+          {services.map((category) => (
+            <CategoryCard key={category.service_name} category={category} />
+          ))}
+        </div>
+        <div className="mt-8">
+          <h2 className="text-4xl font-bold text-gray-800">Category Name</h2>
+          <div className="flex gap-x-4 mt-10">
+            {services.map((service) => (
+              <ServiceCard
+                key={service.service_name}
+                serviceData={service}
+                itemState={true}
+              />
+            ))}
+          </div>
+        </div>
+        <div className="mt-8">
+          <h2 className="text-4xl font-bold text-gray-800">Category Name</h2>
+          <div className="flex gap-x-4 mt-10">
+            {services.map((service) => (
+              <ServiceCard
+                key={service.service_name}
+                serviceData={service}
+                itemState={true}
+              />
+            ))}
+          </div>
+        </div>
+        <div className="mt-8">
+          <h2 className="text-4xl font-bold text-gray-800">Category Name</h2>
+          <div className="flex gap-x-4 mt-10">
+            {services.map((service) => (
+              <ServiceCard
+                key={service.service_name}
+                serviceData={service}
+                itemState={true}
+              />
+            ))}
+          </div>
+        </div>
       </div>
     </div>
   );
