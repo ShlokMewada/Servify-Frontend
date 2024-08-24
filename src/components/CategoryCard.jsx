@@ -1,22 +1,19 @@
-// const CategoryCard = ({ category }) => {
-//   console.log("hello");
-//   return (
-//     <div className="w-full flex justify-center">
-//       <img
-//         src={category.service_pic}
-//         alt="Category"
-//         className="w-40 h-auto rounded-lg"
-//       />
-//     </div>
-//   );
-// };
+import { useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom";
+import { viewServiceCategory } from "../utils/cartSlice";
 
-// export default CategoryCard;
-
-// CategoryCard.js
 const CategoryCard = ({ category }) => {
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const goToCategoryDetails = () => {
+    dispatch(viewServiceCategory(category));
+    navigate("/categorydetails");
+  };
   return (
-    <div className="flex flex-col items-center w-52">
+    <div
+      className="flex flex-col items-center w-52"
+      onClick={goToCategoryDetails}
+    >
       <div className="transition-all duration-300 transform hover:scale-105">
         <img
           src={category.service_pic}

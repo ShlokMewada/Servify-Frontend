@@ -6,6 +6,7 @@ import About from "./components/About";
 import Contact from "./components/Contact";
 import UserProfile from "./components/UserProfile";
 import ServiceDetails from "./components/ServiceDetails";
+import CategoryDetails from "./components/CategoryDetails";
 
 const App = () => {
   const appRouter = createBrowserRouter([
@@ -36,6 +37,10 @@ const App = () => {
     {
       path: "/servicedetails",
       element: <ServiceDetails />,
+    },
+    {
+      path: "/categorydetails",
+      element: <CategoryDetails />,
     },
   ]);
   return (
