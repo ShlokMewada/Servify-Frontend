@@ -42,7 +42,13 @@ const ServiceCard = ({ serviceData, itemState }) => {
         <h1 className="text-lg font-semibold text-gray-800 min-h-[50px] flex items-center">
           {name}
         </h1>
-        <p className="text-sm text-gray-600">{description}</p>
+        {description.length > 70 ? (
+          <p className="text-sm text-gray-600">
+            {description.substring(0, 70)}...
+          </p>
+        ) : (
+          <p className="text-sm text-gray-600">{description}</p>
+        )}
         <p className="text-md font-bold text-indigo-600">₹{price}</p>
         <div className="flex gap-x-2 mt-4">
           {itemState ? (

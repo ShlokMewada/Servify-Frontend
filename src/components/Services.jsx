@@ -15,11 +15,11 @@ const Services = () => {
       <div className="flex flex-col gap-y-6 mt-8">
         <h2 className="text-4xl font-bold text-gray-800">Categories</h2>
         <div className="flex">
-          {services.map((category) => (
+          {services?.map((category) => (
             <CategoryCard key={category.id} category={category} />
           ))}
         </div>
-        {services.map((service) => (
+        {services?.map((service) => (
           <div className="mt-8" key={service.id}>
             <h2 className="text-4xl font-bold text-gray-800">{service.name}</h2>
             <div className="flex gap-x-4 mt-10">
