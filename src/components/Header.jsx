@@ -1,8 +1,9 @@
 import { Link, useNavigate } from "react-router-dom";
 import logo from "../assets/Servify_Black_Logo.png";
 import { useState } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import useService from "../hooks/useService";
+import { viewService } from "../utils/serviceSlice";
 
 const Header = () => {
   const [search, setSearch] = useState("");
@@ -10,6 +11,8 @@ const Header = () => {
   const [searchResult, setSearchResult] = useState([]);
 
   const navigate = useNavigate();
+
+  const dispatch = useDispatch();
 
   useService();
 
@@ -19,18 +22,26 @@ const Header = () => {
 
   if (!onlyServices) return;
 
+  const sortedOnlyServices = Array.from(onlyServices).sort((a, b) =>
+    a.name.localeCompare(b.name)
+  ); // to sort the service data for efficient searching.
+
   const searchService = (e) => {
     setSearch(e.target.value);
     setSearchResult(
-      onlyServices.filter((service) =>
+      sortedOnlyServices.filter((service) =>
         service.name.trim().toLowerCase().includes(search.trim().toLowerCase())
       )
     );
-    console.log(searchResult);
   };
 
   const handleLogOut = () => {
     // localStorage.removeItem("access_token") ---- w-[600px] p-2 rounded-lg border-2 border-blue-400 focus:border-blue-500
+  };
+
+  const goToServiceDetails = (resultService) => {
+    dispatch(viewService(resultService));
+    navigate("/servicedetails");
   };
 
   return (
@@ -48,14 +59,20 @@ const Header = () => {
             onChange={searchService}
           />
           {search !== "" && searchResult.length !== 0 ? (
-            <div className="flex flex-col absolute border-2 border-blue-500 rounded-md w-full mt-3">
+            <div className="flex flex-col bg-white absolute border border-gray-300 rounded-md w-full mt-3 h-64 overflow-auto scrollbar-thin scrollbar-webkit">
               {searchResult.map((result) => (
-                <>
-                  <p key={result.id} className="text-gray-500">
-                    {result.name}
-                  </p>
-                  <div className="h-[2px] bg-gray-300 mb-2"></div>
-                </>
+                <div
+                  key={result.id}
+                  className="flex p-3 justify-start items-center gap-x-3 cursor-pointer"
+                  onClick={() => goToServiceDetails(result)}
+                >
+                  <img
+                    src={result.image_url}
+                    alt=""
+                    className="w-20 rounded-lg"
+                  />
+                  <p className="text-gray-900">{result.name}</p>
+                </div>
               ))}
             </div>
           ) : (
