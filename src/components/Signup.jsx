@@ -3,6 +3,7 @@ import { useRef, useState } from "react";
 import { checkValidDataSignUp } from "../utils/validate";
 import GoogleAuth from "./GoogleAuth";
 import { useNavigate } from "react-router-dom";
+import toast from "react-hot-toast";
 
 const Signup = ({ isEmployee }) => {
   const firstName = useRef();
@@ -74,8 +75,12 @@ const Signup = ({ isEmployee }) => {
       .post("http://localhost:8000/signup/user/", formData)
       .then((response) => {
         console.log(response.data);
+        toast.success("Successfully Signed Up!");
       })
-      .catch((error) => console.error(error));
+      .catch((error) => {
+        console.error(error);
+        toast.error("Something went wrong!, please try again.");
+      });
   };
 
   return (

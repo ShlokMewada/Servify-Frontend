@@ -3,6 +3,7 @@ import { useRef, useState } from "react";
 import { checkValidDataSignIn } from "../utils/validate";
 import GoogleAuth from "./GoogleAuth";
 import { useNavigate } from "react-router-dom";
+import toast from "react-hot-toast";
 
 const Login = ({ isEmployee }) => {
   const email = useRef();
@@ -44,8 +45,12 @@ const Login = ({ isEmployee }) => {
         localStorage.setItem("accessToken", response.data.access);
         localStorage.setItem("refreshToken", response.data.refresh);
         console.log(response.data);
+        toast.success("Successfully Logged In!");
       })
-      .catch((error) => console.error(error));
+      .catch((error) => {
+        console.error(error);
+        toast.error("Invalid Email or Password!");
+      });
   };
 
   return (
