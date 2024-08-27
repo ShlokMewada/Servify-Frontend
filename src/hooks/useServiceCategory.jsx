@@ -10,7 +10,7 @@ const useServiceCategory = () => {
 
   const getServiceCategory = async () => {
     await axiosInstance
-      .get("http://127.0.0.1:8000/service-categories/")
+      .get("http://localhost:8000/service-categories/")
       .then((response) => {
         dispatch(addServices(response.data));
         console.log(response.data);
@@ -20,7 +20,7 @@ const useServiceCategory = () => {
       });
   };
   useEffect(() => {
-    !services && getServiceCategory();
+    getServiceCategory();
   }, []);
 };
 

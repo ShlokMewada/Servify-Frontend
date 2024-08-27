@@ -1,6 +1,6 @@
 import axiosInstance from "../utils/axiosInstance";
 import { useRef, useState } from "react";
-import { checkValidDataSignUp, checkValidDataSignIn } from "../utils/validate";
+import { checkValidDataSignIn } from "../utils/validate";
 import GoogleAuth from "./GoogleAuth";
 import { useNavigate } from "react-router-dom";
 
@@ -20,7 +20,7 @@ const Login = ({ isEmployee }) => {
     navigate("/employee/signup");
   };
 
-  const handleSubmitUser = async () => {
+  const handleSubmit = async () => {
     // console.log(role); <<Role Check Console Log>>
 
     const message = checkValidDataSignIn(
@@ -34,20 +34,18 @@ const Login = ({ isEmployee }) => {
     if (emailErrorMsg !== "" || passwordErrorMsg !== "") {
       return;
     }
-    const credentials = {
-      email: email.current.value,
-      password: password.current.value,
-      is_Employee: isEmployee,
-    };
-    try {
-      const response = await axiosInstance.post(
-        "http://localhost/login",
-        credentials
-      );
-      console.log(response.data);
-    } catch (error) {
-      console.error("There was an error during sign-in!", error);
-    }
+    const formData = new FormData();
+    formData.append("email", email.current.value);
+    formData.append("password", password.current.value);
+
+    await axiosInstance
+      .post("http://localhost:8000/login/", formData)
+      .then((response) => {
+        localStorage.setItem("accessToken", response.data.access);
+        localStorage.setItem("refreshToken", response.data.refresh);
+        console.log(response.data);
+      })
+      .catch((error) => console.error(error));
   };
 
   return (
@@ -102,7 +100,7 @@ const Login = ({ isEmployee }) => {
 
         <button
           className="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-gray-800 hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500"
-          onClick={handleSubmitUser}
+          onClick={handleSubmit}
         >
           Sign In
         </button>

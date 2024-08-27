@@ -10,7 +10,7 @@ const useService = () => {
 
   const getService = async () => {
     await axiosInstance
-      .get("http://127.0.0.1:8000/services/")
+      .get("http://localhost:8000/services/")
       .then((response) => {
         dispatch(addOnlyServices(response.data));
         console.log(response.data);
@@ -20,7 +20,7 @@ const useService = () => {
       });
   };
   useEffect(() => {
-    !onlyServices && getService();
+    getService();
   }, []);
 };
 

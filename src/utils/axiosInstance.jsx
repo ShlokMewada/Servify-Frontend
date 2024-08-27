@@ -2,7 +2,7 @@ import axios from "axios";
 
 // Create an Axios instance
 const axiosInstance = axios.create({
-  withCredentials: true, // Allows cookies to be sent with requests
+  // Allows cookies to be sent with requests
 });
 
 // Request interceptor to add the token to headers

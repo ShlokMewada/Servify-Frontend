@@ -1,6 +1,6 @@
 import axiosInstance from "../utils/axiosInstance";
 import { useRef, useState } from "react";
-import { checkValidDataSignUp, checkValidDataSignIn } from "../utils/validate";
+import { checkValidDataSignUp } from "../utils/validate";
 import GoogleAuth from "./GoogleAuth";
 import { useNavigate } from "react-router-dom";
 
@@ -61,23 +61,21 @@ const Signup = ({ isEmployee }) => {
     ) {
       return;
     }
-    const credentials = {
-      first_name: firstName.current.value,
-      last_name: lastName.current.value,
-      email: email.current.value,
-      password: password.current.value,
-      is_Employee: isEmployee,
-      address: address,
-    };
-    try {
-      const response = await axiosInstance.post(
-        "http://127.0.0.1:8000/signup/user/",
-        credentials
-      );
-      console.log(response.data);
-    } catch (error) {
-      console.error("There was an error during sign-up!", error);
-    }
+
+    const formData = new FormData();
+    formData.append("username", username.current.value);
+    formData.append("email", email.current.value);
+    formData.append("password", password.current.value);
+    formData.append("first_name", firstName.current.value);
+    formData.append("last_name", lastName.current.value);
+    formData.append("address", address.current.value);
+    console.log(formData);
+    await axiosInstance
+      .post("http://localhost:8000/signup/user/", formData)
+      .then((response) => {
+        console.log(response.data);
+      })
+      .catch((error) => console.error(error));
   };
 
   return (
