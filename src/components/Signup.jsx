@@ -4,6 +4,8 @@ import { checkValidDataSignUp } from "../utils/validate";
 import GoogleAuth from "./GoogleAuth";
 import { useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
+import { useDispatch } from "react-redux";
+import { addUser } from "../utils/userSlice";
 
 const Signup = ({ isEmployee }) => {
   const firstName = useRef();
@@ -20,6 +22,8 @@ const Signup = ({ isEmployee }) => {
   const [addressErrorMsg, setAddressErrorMsg] = useState();
 
   const navigate = useNavigate();
+
+  const dispatch = useDispatch();
 
   const navigateToSignInUser = () => {
     navigate("../user/login");
@@ -40,25 +44,22 @@ const Signup = ({ isEmployee }) => {
       password.current.value
     );
 
-    if (!address.current.value) {
-      setAddressErrorMsg("Address required!");
-    } else {
-      setAddressErrorMsg("");
-    }
+    const addressMsg = address.current.value ? "" : "Address required!";
 
     setFirstNameErrorMsg(message.firstNameMsg);
     setLastNameErrorMsg(message.lastNameMsg);
     setUserNameErrorMsg(message.usernameMsg);
     setEmailErrorMsg(message.emailMsg);
     setPasswordErrorMsg(message.passwordMsg);
+    setAddressErrorMsg(addressMsg);
 
     if (
-      firstNameErrorMsg !== "" ||
-      lastNameErrorMsg !== "" ||
-      userNameErrorMsg !== "" ||
-      emailErrorMsg !== "" ||
-      passwordErrorMsg !== "" ||
-      addressErrorMsg !== ""
+      message.firstNameMsg !== "" ||
+      message.lastNameMsg !== "" ||
+      message.usernameMsg !== "" ||
+      message.emailMsg !== "" ||
+      message.passwordMsg !== "" ||
+      addressMsg !== ""
     ) {
       return;
     }
@@ -75,6 +76,7 @@ const Signup = ({ isEmployee }) => {
       .post("http://localhost:8000/signup/user/", formData)
       .then((response) => {
         console.log(response.data);
+        dispatch(addUser(isEmployee));
         toast.success("Successfully Signed Up!");
       })
       .catch((error) => {

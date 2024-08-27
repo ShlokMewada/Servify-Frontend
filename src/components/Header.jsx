@@ -4,6 +4,8 @@ import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import useService from "../hooks/useService";
 import { viewService } from "../utils/serviceSlice";
+import { removeUser } from "../utils/userSlice";
+import toast from "react-hot-toast";
 
 const Header = () => {
   const [search, setSearch] = useState("");
@@ -19,6 +21,8 @@ const Header = () => {
   const onlyServices = useSelector((store) => store.service.onlyServices);
 
   const cart = useSelector((store) => store.cart.cart);
+
+  const user = useSelector((store) => store.user.user);
 
   if (!onlyServices) return;
 
@@ -36,7 +40,8 @@ const Header = () => {
   };
 
   const handleLogOut = () => {
-    // localStorage.removeItem("access_token") ---- w-[600px] p-2 rounded-lg border-2 border-blue-400 focus:border-blue-500
+    dispatch(removeUser());
+    toast.success("Successfully Logged Out!");
   };
 
   const goToServiceDetails = (resultService) => {
@@ -97,19 +102,34 @@ const Header = () => {
               </div>
             </Link>
           </li>
-          <li className="font-semibold text-xl cursor-pointer">
-            <Link to="user/login">Login</Link>
-          </li>
-          <li className="font-semibold text-xl cursor-pointer">
-            <Link to="user/signup">Signup</Link>
-          </li>
-          <li
-            className="font-semibold text-xl cursor-pointer"
-            onClick={handleLogOut}
-          >
-            Log Out
-          </li>
         </ul>
+        {user === null ? (
+          <div className="flex gap-x-3">
+            <div className="font-semibold cursor-pointer">
+              <Link to="/login">
+                <button className="py-2 px-4 border border-transparent rounded-md shadow-sm text-md font-medium text-white bg-gray-800 hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500">
+                  Login
+                </button>
+              </Link>
+            </div>
+            <div className="font-semibold cursor-pointer">
+              <Link to="/signup">
+                <button className="py-2 px-4 border border-transparent rounded-md shadow-sm text-md font-medium text-white bg-gray-800 hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500">
+                  Signup
+                </button>
+              </Link>
+            </div>
+          </div>
+        ) : (
+          <div className="font-semibold cursor-pointer">
+            <button
+              className="justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-md font-medium text-white bg-gray-800 hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500"
+              onClick={handleLogOut}
+            >
+              Log Out
+            </button>
+          </div>
+        )}
       </div>
     </div>
   );

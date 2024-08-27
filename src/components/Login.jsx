@@ -1,9 +1,13 @@
-import axiosInstance from "../utils/axiosInstance";
+import axiosInstance, {
+  axiosUnauthenticatedInstance,
+} from "../utils/axiosInstance";
 import { useRef, useState } from "react";
 import { checkValidDataSignIn } from "../utils/validate";
 import GoogleAuth from "./GoogleAuth";
 import { useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
+import { addUser } from "../utils/userSlice";
+import { useDispatch } from "react-redux";
 
 const Login = ({ isEmployee }) => {
   const email = useRef();
@@ -12,6 +16,8 @@ const Login = ({ isEmployee }) => {
   const [passwordErrorMsg, setPasswordErrorMsg] = useState();
 
   const navigate = useNavigate();
+
+  const dispatch = useDispatch();
 
   const navigateToSignUpUser = () => {
     navigate("/user/signup");
@@ -32,20 +38,22 @@ const Login = ({ isEmployee }) => {
     setEmailErrorMsg(message.emailMsg);
     setPasswordErrorMsg(message.passwordMsg);
 
-    if (emailErrorMsg !== "" || passwordErrorMsg !== "") {
+    if (message.emailMsg !== "" || message.passwordMsg !== "") {
       return;
     }
     const formData = new FormData();
     formData.append("email", email.current.value);
     formData.append("password", password.current.value);
 
-    await axiosInstance
+    await axiosUnauthenticatedInstance
       .post("http://localhost:8000/login/", formData)
       .then((response) => {
         localStorage.setItem("accessToken", response.data.access);
         localStorage.setItem("refreshToken", response.data.refresh);
         console.log(response.data);
+        dispatch(addUser(response.data.is_Employee));
         toast.success("Successfully Logged In!");
+        navigate("/");
       })
       .catch((error) => {
         console.error(error);

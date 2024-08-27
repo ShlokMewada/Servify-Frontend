@@ -8,58 +8,106 @@ import UserProfile from "./components/UserProfile";
 import ServiceDetails from "./components/ServiceDetails";
 import CategoryDetails from "./components/CategoryDetails";
 import Signup from "./components/Signup";
-import { Toaster } from 'react-hot-toast';
+import { Toaster } from "react-hot-toast";
+import {
+  EmployeeProtectedRoute,
+  UserProtectedRoute,
+  AuthenticatedRoute,
+} from "./utils/ProtectedRoute";
+import Employee from "./components/Employee";
+import User from "./components/User";
+import Unauthorized from "./components/Unauthorized";
 
 const App = () => {
   const appRouter = createBrowserRouter([
     {
       path: "/",
-      element: <Home />,
+      element: <User />,
+      children: [
+        {
+          path: "/",
+          element: <Home />,
+        },
+        {
+          element: <AuthenticatedRoute />,
+          children: [
+            {
+              path: "/login",
+              element: <Login isEmployee={false} />,
+            },
+            {
+              path: "/signup",
+              element: <Signup isEmployee={false} />,
+            },
+          ],
+        },
+        {
+          path: "/about",
+          element: <About />,
+        },
+        {
+          path: "/contact",
+          element: <Contact />,
+        },
+        {
+          path: "/servicedetails",
+          element: <ServiceDetails />,
+        },
+        {
+          path: "/categorydetails",
+          element: <CategoryDetails />,
+        },
+        {
+          element: <UserProtectedRoute />,
+          children: [
+            {
+              path: "/cart",
+              element: <Cart />,
+            },
+            {
+              path: "/userprofile",
+              element: <UserProfile />,
+            },
+          ],
+        },
+      ],
     },
     {
-      path: "/cart",
-      element: <Cart />,
+      path: "/employee",
+      element: <Employee />,
+      children: [
+        {
+          element: <AuthenticatedRoute />,
+          children: [
+            {
+              path: "login",
+              element: <Login isEmployee={true} />,
+            },
+            {
+              path: "signup",
+              element: <Signup isEmployee={true} />,
+            },
+          ],
+        },
+        {
+          element: <EmployeeProtectedRoute />,
+          children: [
+            // Add employee-specific routes here
+            // For example:
+            // { path: "dashboard", element: <EmployeeDashboard /> },
+          ],
+        },
+      ],
     },
     {
-      path: "user/login",
-      element: <Login isEmployee={false} />,
-    },
-    {
-      path: "user/signup",
-      element: <Signup isEmployee={false} />,
-    },
-    {
-      path: "employee/login",
-      element: <Login isEmployee={true} />,
-    },
-    {
-      path: "employee/signup",
-      element: <Signup isEmployee={true} />,
-    },
-    {
-      path: "/about",
-      element: <About />,
-    },
-    {
-      path: "/contact",
-      element: <Contact />,
-    },
-    {
-      path: "/userprofile",
-      element: <UserProfile />,
-    },
-    {
-      path: "/servicedetails",
-      element: <ServiceDetails />,
-    },
-    {
-      path: "/categorydetails",
-      element: <CategoryDetails />,
+      path: "/unauthorized",
+      element: <Unauthorized />,
     },
   ]);
+
   return (
     <div>
-      <Toaster/>
+      <Toaster />
       <RouterProvider router={appRouter} />
     </div>
   );
