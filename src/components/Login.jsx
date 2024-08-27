@@ -1,93 +1,53 @@
-import axios from "axios";
+import axiosInstance from "../utils/axiosInstance";
 import { useRef, useState } from "react";
 import { checkValidDataSignUp, checkValidDataSignIn } from "../utils/validate";
 import GoogleAuth from "./GoogleAuth";
+import { useNavigate } from "react-router-dom";
 
-const Login = () => {
-  const name = useRef();
-  const username = useRef();
+const Login = ({ isEmployee }) => {
   const email = useRef();
   const password = useRef();
-  const [role, setRole] = useState("User");
-  const [nameErrorMsg, setNameErrorMsg] = useState();
-  const [userNameErrorMsg, setUserNameErrorMsg] = useState();
   const [emailErrorMsg, setEmailErrorMsg] = useState();
   const [passwordErrorMsg, setPasswordErrorMsg] = useState();
 
-  const [isSignIn, setIsSignIn] = useState(true);
+  const navigate = useNavigate();
 
-  const toggleSignInForm = () => {
-    setIsSignIn(!isSignIn);
+  const navigateToSignUpUser = () => {
+    navigate("/user/signup");
   };
 
-  const handleSubmit = async () => {
+  const navigateToSignUpEmployee = () => {
+    navigate("/employee/signup");
+  };
+
+  const handleSubmitUser = async () => {
     // console.log(role); <<Role Check Console Log>>
-    if (!isSignIn) {
-      const message = checkValidDataSignUp(
-        name.current.value,
-        username.current.value,
-        email.current.value,
-        password.current.value
-      );
 
-      setNameErrorMsg(message.nameMsg);
-      setUserNameErrorMsg(message.usernameMsg);
-      setEmailErrorMsg(message.emailMsg);
-      setPasswordErrorMsg(message.passwordMsg);
+    const message = checkValidDataSignIn(
+      email.current.value,
+      password.current.value
+    );
 
-      if (
-        message.nameMsg !== "" ||
-        message.usernameMsg !== "" ||
-        message.emailMsg !== "" ||
-        message.passwordMsg !== ""
-      ) {
-        return;
-      }
-    } else {
-      const message = checkValidDataSignIn(
-        email.current.value,
-        password.current.value
-      );
+    setEmailErrorMsg(message.emailMsg);
+    setPasswordErrorMsg(message.passwordMsg);
 
-      setEmailErrorMsg(message.emailMsg);
-      setPasswordErrorMsg(message.passwordMsg);
-
-      if (message.emailMsg !== "" || message.passwordMsg !== "") {
-        return;
-      }
+    if (emailErrorMsg !== "" || passwordErrorMsg !== "") {
+      return;
     }
-
-    // if (!isSignIn) {
-    //   const credentials = {
-    //     name: name.current.value,
-    //     email: email.current.value,
-    //     password: password.current.value,
-    //     role: role,
-    //   };
-    //   try {
-    //     const response = await axios.post(
-    //       "https://api.example.com/signup",
-    //       credentials
-    //     );
-    //     console.log(response.data);
-    //   } catch (error) {
-    //     console.error("There was an error during sign-up!", error);
-    //   }
-    // } else {
-    //   const credentials = {
-    //     email: email.current.value,
-    //     password: password.current.value,
-    //   };
-    //   try {
-    //     const response = await axios.post(
-    //       "https://api.example.com/signin",
-    //       credentials
-    //     );
-    //     console.log(response.data);
-    //   } catch (error) {
-    //     console.error("There was an error during sign-in!", error);
-    //   }
-    // }
+    const credentials = {
+      email: email.current.value,
+      password: password.current.value,
+      is_Employee: isEmployee,
+    };
+    try {
+      const response = await axiosInstance.post(
+        "http://localhost/login",
+        credentials
+      );
+      console.log(response.data);
+    } catch (error) {
+      console.error("There was an error during sign-in!", error);
+    }
   };
 
   return (
@@ -99,49 +59,8 @@ const Login = () => {
         }}
       >
         <h2 className="text-3xl font-extrabold text-center text-gray-900 mb-6">
-          {isSignIn ? "Sign In" : "Sign Up"}
+          Sign In
         </h2>
-
-        {!isSignIn && (
-          <>
-            <div>
-              <label
-                htmlFor="name"
-                className="block text-sm font-medium text-gray-700"
-              >
-                Name
-              </label>
-              <input
-                id="name"
-                className="mt-1 block w-full px-3 py-2 bg-gray-50 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-gray-500 focus:border-transparent"
-                type="text"
-                placeholder="Enter Name"
-                ref={name}
-              />
-              {nameErrorMsg && (
-                <p className="mt-2 text-sm text-red-600">{nameErrorMsg}</p>
-              )}
-            </div>
-            <div>
-              <label
-                htmlFor="username"
-                className="block text-sm font-medium text-gray-700"
-              >
-                Username
-              </label>
-              <input
-                id="username"
-                className="mt-1 block w-full px-3 py-2 bg-gray-50 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-gray-500 focus:border-transparent"
-                type="text"
-                placeholder="Enter Username"
-                ref={username}
-              />
-              {userNameErrorMsg && (
-                <p className="mt-2 text-sm text-red-600">{userNameErrorMsg}</p>
-              )}
-            </div>
-          </>
-        )}
 
         <div>
           <label
@@ -181,58 +100,41 @@ const Login = () => {
           )}
         </div>
 
-        <div className="flex items-center gap-x-5">
-          <p className="text-sm font-medium text-gray-700">
-            {isSignIn ? "Sign In as:" : "Sign Up as:"}
-          </p>
-          <label className="flex items-center cursor-pointer gap-x-2">
-            <span className="text-sm font-medium text-gray-700">User:</span>
-            <input
-              type="radio"
-              name="role"
-              value="User"
-              onChange={() => setRole("User")}
-              defaultChecked
-              className="form-radio h-4 w-4 text-gray-600"
-            />
-          </label>
-          <label className="flex items-center cursor-pointer gap-x-2">
-            <span className="text-sm font-medium text-gray-700">Employee:</span>
-            <input
-              type="radio"
-              name="role"
-              value="Employee"
-              onChange={() => setRole("Employee")}
-              className="form-radio h-4 w-4 text-gray-600"
-            />
-          </label>
-        </div>
-
         <button
           className="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-gray-800 hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500"
-          onClick={handleSubmit}
+          onClick={handleSubmitUser}
         >
-          {isSignIn ? "Sign In" : "Sign Up"}
+          Sign In
         </button>
 
         <div className="flex flex-col items-center gap-y-2">
           <p className="text-sm font-medium text-gray-700">
-            {isSignIn ? "Sign In Using Google:" : "Sign Up Using Google:"}
+            Sign In Using Google:
           </p>
-          <GoogleAuth isSignIn={isSignIn} role={role} />
+          <GoogleAuth isSignIn={true} role={false} />
         </div>
 
-        <div className="flex justify-center gap-x-1 text-sm">
-          <p className="text-gray-600">
-            {isSignIn ? "New to Servify?" : "Already a user?"}
-          </p>
-          <button
-            className="font-medium text-gray-800 hover:text-gray-600"
-            onClick={toggleSignInForm}
-          >
-            {isSignIn ? "Sign Up now." : "Sign In now."}
-          </button>
-        </div>
+        {!isEmployee ? (
+          <div className="flex justify-center gap-x-1 text-sm">
+            <p className="text-gray-600">New to Servify?</p>
+            <button
+              className="font-medium text-gray-800 hover:text-gray-600"
+              onClick={navigateToSignUpUser}
+            >
+              Sign Up now.
+            </button>
+          </div>
+        ) : (
+          <div className="flex justify-center gap-x-1 text-sm">
+            <p className="text-gray-600">New Employee?</p>
+            <button
+              className="font-medium text-gray-800 hover:text-gray-600"
+              onClick={navigateToSignUpEmployee}
+            >
+              Sign Up now.
+            </button>
+          </div>
+        )}
       </form>
     </div>
   );

@@ -7,6 +7,7 @@ import Contact from "./components/Contact";
 import UserProfile from "./components/UserProfile";
 import ServiceDetails from "./components/ServiceDetails";
 import CategoryDetails from "./components/CategoryDetails";
+import Signup from "./components/Signup";
 
 const App = () => {
   const appRouter = createBrowserRouter([
@@ -19,8 +20,20 @@ const App = () => {
       element: <Cart />,
     },
     {
-      path: "/login",
-      element: <Login />,
+      path: "user/login",
+      element: <Login isEmployee={false} />,
+    },
+    {
+      path: "user/signup",
+      element: <Signup isEmployee={false} />,
+    },
+    {
+      path: "employee/login",
+      element: <Login isEmployee={true} />,
+    },
+    {
+      path: "employee/signup",
+      element: <Signup isEmployee={true} />,
     },
     {
       path: "/about",

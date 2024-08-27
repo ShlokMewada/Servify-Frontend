@@ -27,7 +27,10 @@ const Footer = () => {
           <ul className="flex flex-col gap-y-1">
             <li className="text-lg font-bold mb-3">For Partners</li>
             <li className="text-gray-600 text-sm">
-              Register as a professional
+              <Link to="/employee/signup">Register as a professional</Link>
+            </li>
+            <li className="text-gray-600 text-sm">
+              <Link to="/employee/login">login as a professional</Link>
             </li>
           </ul>
           <ul className="flex flex-col gap-y-1">

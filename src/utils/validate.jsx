@@ -1,22 +1,37 @@
-export const checkValidDataSignUp = (name, username, email, password) => {
-  const isNameValid = /^[a-zA-Z]+ [a-zA-Z]+$/.test(name);
+export const checkValidDataSignUp = (
+  firstName,
+  lastName,
+  username,
+  email,
+  password
+) => {
+  const isFirstNameValid = /^[a-zA-Z]{2,}$/.test(firstName);
 
-  const isUserNameValid = /^[A-Za-z][A-Za-z0-9_]{7,29}$/.test(username);
+  const isLastNameValid = /^[a-zA-Z]{2,}$/.test(lastName);
 
-  const isEmailValid = /^([a-zA-Z0-9._%-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,})$/.test(
-    email
-  );
+  const isUserNameValid = /^[a-zA-Z0-9_]{3,16}$/.test(username);
+
+  const isEmailValid = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
 
   const isPasswordValid =
-    /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,}$/.test(password);
+    /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/.test(
+      password
+    );
 
   let usernameMsg = "";
-  let nameMsg = "";
+  let firstNameMsg = "";
+  let lastNameMsg = "";
   let passwordMsg = "";
   let emailMsg = "";
 
-  if (isEmailValid && isPasswordValid && isNameValid && isUserNameValid) {
-    return { nameMsg, passwordMsg, emailMsg };
+  if (
+    isEmailValid &&
+    isPasswordValid &&
+    isFirstNameValid &&
+    isLastNameValid &&
+    isUserNameValid
+  ) {
+    return { firstNameMsg, lastNameMsg, passwordMsg, emailMsg, usernameMsg };
   } else {
     if (!isUserNameValid) {
       usernameMsg = "Username is not valid!";
@@ -27,21 +42,24 @@ export const checkValidDataSignUp = (name, username, email, password) => {
     if (!isEmailValid) {
       emailMsg = "Email ID is not valid!";
     }
-    if (!isNameValid) {
-      nameMsg = "Name is not valid!";
+    if (!isFirstNameValid) {
+      firstNameMsg = "First Name is not valid!";
+    }
+    if (!isLastNameValid) {
+      lastNameMsg = "Last Name is not valid!";
     }
 
-    return { nameMsg, usernameMsg, passwordMsg, emailMsg };
+    return { firstNameMsg, lastNameMsg, usernameMsg, passwordMsg, emailMsg };
   }
 };
 
 export const checkValidDataSignIn = (email, password) => {
-  const isEmailValid = /^([a-zA-Z0-9._%-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,})$/.test(
-    email
-  );
+  const isEmailValid = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
 
   const isPasswordValid =
-    /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,}$/.test(password);
+    /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/.test(
+      password
+    );
 
   let passwordMsg = "";
   let emailMsg = "";
@@ -60,22 +78,28 @@ export const checkValidDataSignIn = (email, password) => {
   }
 };
 
-export const checkValidDataContact = (name, email, phoneNo) => {
-  const isNameValid = /^[a-zA-Z]+ [a-zA-Z]+$/.test(name);
-  const isEmailValid = /^([a-zA-Z0-9._%-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,})$/.test(
-    email
-  );
+export const checkValidDataContact = (firstName, lastName, email, phoneNo) => {
+  const isFirstNameValid = /^[a-zA-Z]{2,}$/.test(firstName);
+
+  const isLastNameValid = /^[a-zA-Z]{2,}$/.test(lastName);
+
+  const isEmailValid = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+
   const isPhoneNoValid = /^[0-9]{10}$/.test(phoneNo);
 
-  let nameMsg = "";
+  let firstNameMsg = "";
+  let lastNameMsg = "";
   let emailMsg = "";
   let phoneNoMsg = "";
 
-  if (isEmailValid && isNameValid && isPhoneNoValid) {
-    return { nameMsg, emailMsg, isPhoneNoValid };
+  if (isEmailValid && isFirstNameValid && isLastNameValid && isPhoneNoValid) {
+    return { firstNameMsg, emailMsg, isPhoneNoValid };
   } else {
-    if (!isNameValid) {
-      nameMsg = "Name is not valid!";
+    if (!isFirstNameValid) {
+      firstNameMsg = "First Name is not valid!";
+    }
+    if (!isLastNameValid) {
+      firstNameMsg = "Last Name is not valid!";
     }
     if (!isEmailValid) {
       emailMsg = "Email ID is not valid!";
@@ -84,6 +108,6 @@ export const checkValidDataContact = (name, email, phoneNo) => {
       phoneNoMsg = "Phone no. is not valid";
     }
 
-    return { nameMsg, emailMsg, phoneNoMsg };
+    return { firstNameMsg, lastNameMsg, emailMsg, phoneNoMsg };
   }
 };

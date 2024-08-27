@@ -98,7 +98,10 @@ const Header = () => {
             </Link>
           </li>
           <li className="font-semibold text-xl cursor-pointer">
-            <Link to="/login">Login</Link>
+            <Link to="user/login">Login</Link>
+          </li>
+          <li className="font-semibold text-xl cursor-pointer">
+            <Link to="user/signup">Signup</Link>
           </li>
           <li
             className="font-semibold text-xl cursor-pointer"

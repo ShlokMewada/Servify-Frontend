@@ -1,7 +1,7 @@
-import axios from "axios";
+import axiosInstance from "../utils/axiosInstance";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { addOnlyServices, addServices } from "../utils/serviceSlice";
+import { addOnlyServices } from "../utils/serviceSlice";
 
 const useService = () => {
   const dispatch = useDispatch();
@@ -9,7 +9,7 @@ const useService = () => {
   const onlyServices = useSelector((store) => store.service.onlyServices);
 
   const getService = async () => {
-    await axios
+    await axiosInstance
       .get("http://127.0.0.1:8000/services/")
       .then((response) => {
         dispatch(addOnlyServices(response.data));
