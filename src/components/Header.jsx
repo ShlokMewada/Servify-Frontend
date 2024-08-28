@@ -2,7 +2,6 @@ import { Link, useNavigate } from "react-router-dom";
 import logo from "../assets/Servify_Black_Logo.png";
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import useService from "../hooks/useService";
 import { viewService } from "../utils/serviceSlice";
 import { removeUser } from "../utils/userSlice";
 import toast from "react-hot-toast";
@@ -48,7 +47,7 @@ const Header = () => {
   };
 
   return (
-    <div className="w-full fixed z-10 bg-white border-2">
+    <div className="w-full fixed z-10 bg-[#F5F5F5]  border-2">
       <div className="w-10/12 mx-auto flex justify-between items-center p-7">
         <Link to="/">
           <img src={logo} alt="logo" className="w-32" />
@@ -95,7 +94,6 @@ const Header = () => {
           <li className="font-semibold text-xl cursor-pointer">
             <Link to="/">Home</Link>
           </li>
-          <li className="font-semibold text-xl cursor-pointer">Services</li>
           <li className="font-semibold text-xl cursor-pointer relative">
             <Link to="/cart">
               <i className="fa-solid fa-cart-shopping text-2xl"></i>
