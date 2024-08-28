@@ -1,7 +1,9 @@
+import { useSelector } from "react-redux";
 import logo from "../assets/Servify_Black_Logo.png";
 import { Link } from "react-router-dom";
 
 const Footer = () => {
+  const user = useSelector((store) => store.user.user);
   return (
     <div className="bg-[#F5F5F5] w-full p-10 mt-24">
       <div className="w-10/12 mx-auto flex flex-col gap-y-10">
@@ -24,15 +26,17 @@ const Footer = () => {
               <Link to="/contact">Contact Us</Link>
             </li>
           </ul>
-          <ul className="flex flex-col gap-y-1">
-            <li className="text-lg font-bold mb-3">For Partners</li>
-            <li className="text-gray-600 text-sm">
-              <Link to="/employee/signup">Register as a professional</Link>
-            </li>
-            <li className="text-gray-600 text-sm">
-              <Link to="/employee/login">login as a professional</Link>
-            </li>
-          </ul>
+          {user === null && (
+            <ul className="flex flex-col gap-y-1">
+              <li className="text-lg font-bold mb-3">For Partners</li>
+              <li className="text-gray-600 text-sm">
+                <Link to="/employee/signup">Register as a professional</Link>
+              </li>
+              <li className="text-gray-600 text-sm">
+                <Link to="/employee/login">login as a professional</Link>
+              </li>
+            </ul>
+          )}
           <ul className="flex flex-col gap-y-1">
             <li className="text-lg font-bold mb-3">Social Links</li>
             <li>

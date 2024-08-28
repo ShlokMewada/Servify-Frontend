@@ -15,11 +15,8 @@ export const UserProtectedRoute = () => {
 
 export const EmployeeProtectedRoute = () => {
   const user = useSelector((store) => store.user.user);
-  if (user === null) {
+  if (user === null || (user !== null && !user)) {
     return <Navigate to="/employee/login" replace />;
-  }
-  if (user !== null && !user) {
-    return <Navigate to="/" replace />;
   }
   return <Outlet />;
 };

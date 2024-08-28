@@ -16,30 +16,34 @@ const CategoryDetails = () => {
     <div>
       <Header />
       <div className="w-10/12 mx-auto min-h-screen py-8 pt-44">
-        <div className="flex flex-col gap-y-16">
-          <div className="flex gap-10">
-            <div className="">
-              <img
-                src={image_url}
-                alt={name}
-                className="w-full h-56 object-cover rounded-lg shadow-md"
-              />
-            </div>
-
-            <div className="flex flex-col col-span-2 space-y-6">
-              <h1 className="text-5xl font-extrabold text-gray-800 mb-4">
-                {name}
-              </h1>
-              <p className="text-gray-600 text-lg leading-relaxed">
-                {description}
+        <div className="flex flex-col lg:flex-row lg:space-x-4 space-y-8 lg:space-y-0">
+          {/* Column 1: Category Image */}
+          <div className="flex flex-col space-y-6 lg:w-1/4 border-2 border-gray-300 p-3 rounded-lg">
+            <img
+              src={image_url}
+              alt={name}
+              className="w-full h-48 object-cover rounded-lg shadow-md"
+            />
+            <div>
+              <h2 className="text-xl font-bold text-gray-900 mb-4">
+                How It Works
+              </h2>
+              <p className="text-sm text-gray-700">
+                1. Book a service online
+                <br />
+                2. Our expert visits at your convenience
+                <br />
+                3. Get your appliance fixed or maintained
               </p>
             </div>
           </div>
-          <div className="flex flex-col gap-y-5">
-            <div className="flex items-center justify-center gap-x-10">
-              <h2 className="text-4xl font-bold text-gray-800">Services</h2>
-            </div>
-            <div className="flex gap-x-4">
+
+          {/* Column 2: Service List */}
+          <div className="flex flex-col space-y-4 w-9/12 border-2 border-gray-300 p-3 rounded-lg">
+            <h1 className="text-3xl font-extrabold text-gray-800 mb-4">
+              {name} Services
+            </h1>
+            <div className="flex flex-wrap gap-4">
               {services.map((serviceItems) => (
                 <ServiceCard
                   key={serviceItems.id}

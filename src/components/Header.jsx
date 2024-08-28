@@ -37,6 +37,8 @@ const Header = () => {
   };
 
   const handleLogOut = () => {
+    localStorage.removeItem("accessToken");
+    localStorage.removeItem("refreshToken");
     dispatch(removeUser());
     toast.success("Successfully Logged Out!");
   };

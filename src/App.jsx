@@ -20,6 +20,7 @@ import Unauthorized from "./components/Unauthorized";
 import { useEffect } from "react";
 import useServiceCategory from "./hooks/useServiceCategory";
 import useService from "./hooks/useService";
+import PageNotFound from "./components/PageNotFound";
 
 const App = () => {
   const appRouter = createBrowserRouter([
@@ -77,32 +78,29 @@ const App = () => {
     },
     {
       path: "/employee",
-      element: <EmployeeProtectedRoute />,
       children: [
         {
-          element: <Employee />,
+          element: <AuthenticatedRoute />,
           children: [
             {
-              element: <AuthenticatedRoute />,
-              children: [
-                {
-                  path: "login",
-                  element: <Login isEmployee={true} />,
-                },
-                {
-                  path: "signup",
-                  element: <Signup isEmployee={true} />,
-                },
-              ],
+              path: "login",
+              element: <Login isEmployee={true} />,
+            },
+            {
+              path: "signup",
+              element: <Signup isEmployee={true} />,
             },
           ],
         },
         {
           element: <EmployeeProtectedRoute />,
           children: [
-            // Add employee-specific routes here
-            // For example:
-            // { path: "dashboard", element: <EmployeeDashboard /> },
+            {
+              element: <Employee />,
+              children: [
+                // Add employee-specific protected routes here
+              ],
+            },
           ],
         },
       ],
@@ -110,6 +108,10 @@ const App = () => {
     {
       path: "/unauthorized",
       element: <Unauthorized />,
+    },
+    {
+      path: "*",
+      element: <PageNotFound />,
     },
   ]);
 
