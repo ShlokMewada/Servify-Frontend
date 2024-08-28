@@ -7,7 +7,7 @@ export const UserProtectedRoute = () => {
   if (user === null) {
     return <Navigate to="/login" replace />;
   }
-  if (user) {
+  if (user !== null && user) {
     return <Navigate to="/unauthorized" replace />;
   }
   return <Outlet />;
@@ -18,8 +18,8 @@ export const EmployeeProtectedRoute = () => {
   if (user === null) {
     return <Navigate to="/employee/login" replace />;
   }
-  if (!user) {
-    return <Navigate to="/unauthorized" replace />;
+  if (user !== null && !user) {
+    return <Navigate to="/" replace />;
   }
   return <Outlet />;
 };

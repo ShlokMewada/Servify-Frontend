@@ -3,8 +3,6 @@ import CategoryCard from "./CategoryCard";
 import useServiceCategory from "../hooks/useServiceCategory";
 import { useSelector } from "react-redux";
 const Services = () => {
-  useServiceCategory();
-
   const services = useSelector((store) => store.service.services);
 
   return (

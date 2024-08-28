@@ -17,6 +17,9 @@ import {
 import Employee from "./components/Employee";
 import User from "./components/User";
 import Unauthorized from "./components/Unauthorized";
+import { useEffect } from "react";
+import useServiceCategory from "./hooks/useServiceCategory";
+import useService from "./hooks/useService";
 
 const App = () => {
   const appRouter = createBrowserRouter([
@@ -74,18 +77,23 @@ const App = () => {
     },
     {
       path: "/employee",
-      element: <Employee />,
+      element: <EmployeeProtectedRoute />,
       children: [
         {
-          element: <AuthenticatedRoute />,
+          element: <Employee />,
           children: [
             {
-              path: "login",
-              element: <Login isEmployee={true} />,
-            },
-            {
-              path: "signup",
-              element: <Signup isEmployee={true} />,
+              element: <AuthenticatedRoute />,
+              children: [
+                {
+                  path: "login",
+                  element: <Login isEmployee={true} />,
+                },
+                {
+                  path: "signup",
+                  element: <Signup isEmployee={true} />,
+                },
+              ],
             },
           ],
         },
@@ -104,6 +112,9 @@ const App = () => {
       element: <Unauthorized />,
     },
   ]);
+
+  useServiceCategory();
+  useService();
 
   return (
     <div>

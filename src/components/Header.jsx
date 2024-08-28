@@ -16,8 +16,6 @@ const Header = () => {
 
   const dispatch = useDispatch();
 
-  useService();
-
   const onlyServices = useSelector((store) => store.service.onlyServices);
 
   const cart = useSelector((store) => store.cart.cart);
@@ -64,7 +62,7 @@ const Header = () => {
             onChange={searchService}
           />
           {search !== "" && searchResult.length !== 0 ? (
-            <div className="flex flex-col bg-white absolute border border-gray-300 rounded-md w-full mt-3 h-64 overflow-auto scrollbar-thin scrollbar-webkit">
+            <div className="flex flex-col bg-white absolute border border-gray-300 rounded-md w-full mt-3 min-h-20 max-h-64 overflow-auto scrollbar-thin scrollbar-webkit">
               {searchResult.map((result) => (
                 <div
                   key={result.id}
@@ -81,7 +79,11 @@ const Header = () => {
               ))}
             </div>
           ) : (
-            search !== "" && <p className="absolute">No Results Found</p>
+            search !== "" && (
+              <p className="absolute bg-white border border-gray-300 rounded-md w-full mt-3 h-20 flex justify-center items-center">
+                No Results Found
+              </p>
+            )
           )}
         </div>
         <ul className="flex gap-x-5 items-center">

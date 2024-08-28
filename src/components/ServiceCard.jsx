@@ -2,6 +2,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { addToCart, removeFromCart } from "../utils/cartSlice";
 import { viewService } from "../utils/serviceSlice";
 import { useNavigate } from "react-router-dom";
+import toast from "react-hot-toast";
 
 const ServiceCard = ({ serviceData, itemState }) => {
   const cartItems = useSelector((store) => store.cart.cart);
@@ -19,13 +20,16 @@ const ServiceCard = ({ serviceData, itemState }) => {
 
   const handleAddToCart = () => {
     dispatch(addToCart(serviceData));
+    toast.success(`${name} added to Cart`);
   };
 
   const handleAddMinus = (operation) => {
     if (operation) {
       dispatch(addToCart(serviceData));
+      toast.success(`${name} added to Cart`);
     } else {
       dispatch(removeFromCart(name));
+      toast.success(`${name} removed from Cart`);
     }
   };
 
