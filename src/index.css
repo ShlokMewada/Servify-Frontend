@@ -23,6 +23,19 @@ body {
       background: #555;
     }
   }
+
+  @keyframes loading-bar {
+    0% {
+      width: 0px;
+    }
+    100% {
+      width: inherit;
+    }
+  }
+
+  .animate-loading-bar {
+    animation: loading-bar 3s linear infinite;
+  }
 }
 
 @tailwind base;

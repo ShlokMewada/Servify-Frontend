@@ -17,12 +17,24 @@ import {
 import Employee from "./components/Employee";
 import User from "./components/User";
 import Unauthorized from "./components/Unauthorized";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import useServiceCategory from "./hooks/useServiceCategory";
 import useService from "./hooks/useService";
 import PageNotFound from "./components/PageNotFound";
+import LoadingScreen from "./components/LoadingScreen";
+import EmployeeDashboard from "./components/EmployeeDashboard";
 
 const App = () => {
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setIsLoading(false);
+    }, 3000); // 3 seconds loading time
+
+    return () => clearTimeout(timer);
+  }, []);
+
   const appRouter = createBrowserRouter([
     {
       path: "/",
@@ -98,7 +110,10 @@ const App = () => {
             {
               element: <Employee />,
               children: [
-                // Add employee-specific protected routes here
+                // {
+                //   path: "/employee/dashboard",
+                //   element: <EmployeeDashboard />,
+                // },
               ],
             },
           ],
@@ -113,6 +128,10 @@ const App = () => {
       path: "*",
       element: <PageNotFound />,
     },
+    {
+      path: "/employee/dashboard",
+      element: <EmployeeDashboard />,
+    },
   ]);
 
   useServiceCategory();
@@ -121,6 +140,7 @@ const App = () => {
   return (
     <div>
       <Toaster />
+      <LoadingScreen isLoading={isLoading} />
       <RouterProvider router={appRouter} />
     </div>
   );
