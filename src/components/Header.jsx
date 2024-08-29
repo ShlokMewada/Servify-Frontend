@@ -21,11 +21,11 @@ const Header = () => {
 
   const user = useSelector((store) => store.user.user);
 
-  if (!onlyServices) return;
+  // if (!onlyServices) return;
 
-  const sortedOnlyServices = Array.from(onlyServices).sort((a, b) =>
-    a.name.localeCompare(b.name)
-  ); // to sort the service data for efficient searching.
+  const sortedOnlyServices =
+    onlyServices &&
+    Array.from(onlyServices)?.sort((a, b) => a.name.localeCompare(b.name)); // to sort the service data for efficient searching.
 
   const searchService = (e) => {
     setSearch(e.target.value);
