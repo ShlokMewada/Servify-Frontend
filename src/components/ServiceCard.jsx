@@ -34,7 +34,10 @@ const ServiceCard = ({ serviceData, itemState }) => {
   };
 
   return (
-    <div className="w-[280px] flex flex-col justify-between border-2 border-gray-300 rounded-lg hover:shadow-lg transition-all duration-300 transform hover:-translate-y-1 hover:scale-105">
+    <div
+      id="slider-boxes"
+      className="w-[280px] h-[400px] flex flex-col justify-between border-2 border-gray-300 rounded-lg hover:shadow-lg transition-all duration-300 transform hover:-translate-y-1 hover:scale-105"
+    >
       <div className="w-full h-32 bg-gray-200 flex items-center justify-center rounded-t-lg overflow-hidden">
         <img
           src={image_url}

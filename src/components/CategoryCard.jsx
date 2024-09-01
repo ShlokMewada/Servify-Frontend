@@ -11,6 +11,7 @@ const CategoryCard = ({ category }) => {
   };
   return (
     <div
+      id="slider-boxes"
       className="flex flex-col items-center w-52"
       onClick={goToCategoryDetails}
     >
