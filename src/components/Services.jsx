@@ -8,44 +8,45 @@ import "slick-carousel/slick/slick-theme.css";
 const Services = () => {
   const services = useSelector((store) => store.service.services);
 
-  var settings = {
+  const sliderSettings = (itemCount) => ({
     dots: false,
     infinite: false,
     speed: 500,
-    slidesToShow: 1,
-    slidesToScroll: 2,
+    slidesToShow: Math.min(3, itemCount), // Show up to 3 items, or fewer if less are available
+    slidesToScroll: Math.min(2, itemCount - 1), // Scroll one less than the total items if possible
     initialSlide: 0,
     centerMode: false, // This will ensure slides align to the left instead of center
     responsive: [
       {
         breakpoint: 1024,
         settings: {
-          slidesToShow: 3,
-          slidesToScroll: 2,
-          infinite: true,
-          dots: true,
-          centerMode: false, // Ensure left alignment on smaller screens too
+          slidesToShow: Math.min(3, itemCount), // Prevent overshooting
+          slidesToScroll: Math.min(2, itemCount - 1), // Adjust scroll to prevent empty scroll
+          infinite: false,
+          dots: false,
+          centerMode: false,
         },
       },
       {
         breakpoint: 600,
         settings: {
-          slidesToShow: 2,
-          slidesToScroll: 2,
-          initialSlide: 0,
-          centerMode: false, // Align left
+          slidesToShow: Math.min(2, itemCount),
+          slidesToScroll: Math.min(2, itemCount - 1),
+          infinite: false,
+          centerMode: false,
         },
       },
       {
         breakpoint: 480,
         settings: {
-          slidesToShow: 1,
-          slidesToScroll: 1,
-          centerMode: false, // Align left
+          slidesToShow: Math.min(1, itemCount),
+          slidesToScroll: Math.min(1, itemCount - 1),
+          infinite: false,
+          centerMode: false,
         },
       },
     ],
-  };
+  });
 
   return (
     <div className="w-10/12 mx-auto">
@@ -55,7 +56,7 @@ const Services = () => {
       <div className="w-full h-fit flex flex-col gap-y-6 mt-8 px-4 py-10">
         <h2 className="text-4xl font-bold text-gray-800">Categories</h2>
         <div className="w-full h-fit p-8">
-          <Slider {...settings}>
+          <Slider {...sliderSettings(services.length)}>
             {services?.map((category) => (
               <CategoryCard key={category.id} category={category} />
             ))}
@@ -65,7 +66,7 @@ const Services = () => {
           <div className="mt-8" key={service.id}>
             <h2 className="text-4xl font-bold text-gray-800">{service.name}</h2>
             <div className="w-full h-fit p-8">
-              <Slider {...settings}>
+              <Slider {...sliderSettings(service.services.length)}>
                 {service.services.map((serviceItems) => (
                   <ServiceCard
                     key={serviceItems.id}
