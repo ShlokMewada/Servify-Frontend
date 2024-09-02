@@ -8,13 +8,11 @@ import "slick-carousel/slick/slick-theme.css";
 const Services = () => {
   const services = useSelector((store) => store.service.services);
 
-  const slidesToShow = services.length < 4 ? services.length : 4;
-
   var settings = {
     dots: false,
     infinite: false,
     speed: 500,
-    slidesToShow: slidesToShow,
+    slidesToShow: 1,
     slidesToScroll: 2,
     initialSlide: 0,
     centerMode: false, // This will ensure slides align to the left instead of center
