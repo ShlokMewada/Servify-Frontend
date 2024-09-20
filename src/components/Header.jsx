@@ -50,7 +50,7 @@ const Header = () => {
 
   return (
     <div className="w-full fixed z-10 bg-[#F5F5F5] border-2">
-      <div className="w-10/12 mx-auto flex justify-between items-center p-7">
+      <div className="w-10/12 mx-auto flex justify-between items-center p-7 md:gap-x-6">
         <Link to="/">
           <img src={logo} alt="logo" className="w-32" />
         </Link>
