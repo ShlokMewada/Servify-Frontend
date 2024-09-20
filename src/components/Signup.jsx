@@ -1,4 +1,6 @@
-import axiosInstance from "../utils/axiosInstance";
+import axiosInstance, {
+  axiosUnauthenticatedInstance,
+} from "../utils/axiosInstance";
 import { useRef, useState } from "react";
 import { checkValidDataSignUp } from "../utils/validate";
 import GoogleAuth from "./GoogleAuth";
@@ -77,10 +79,29 @@ const Signup = ({ isEmployee }) => {
         `http://localhost:8000/signup/${!isEmployee ? "user" : "employee"}/`,
         formData
       )
-      .then((response) => {
-        console.log(response.data);
-        dispatch(addUser(isEmployee));
-        toast.success("Successfully Signed Up!");
+      .then(async (response) => {
+        // console.log(response.data);
+        // localStorage.setItem("user_id", response.data.user_id);
+        // dispatch(addUser(response.data.is_employee));
+        // console.log(formData.get("email"))
+        await axiosUnauthenticatedInstance
+          .post("http://localhost:8000/login/", {
+            email: formData.get("email"),
+            password: formData.get("password"),
+          })
+          .then((response) => {
+            localStorage.setItem("accessToken", response.data.access);
+            localStorage.setItem("refreshToken", response.data.refresh);
+            localStorage.setItem("user_id", response.data.user_id);
+            console.log(response.data);
+            dispatch(addUser(response.data.is_employee));
+            toast.success("Successfully Signed Up!");
+            navigate("/");
+          })
+          .catch((error) => {
+            console.error(error);
+            toast.error("Invalid Email or Password!");
+          });
       })
       .catch((error) => {
         console.error(error);

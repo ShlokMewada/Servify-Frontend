@@ -50,8 +50,11 @@ const Login = ({ isEmployee }) => {
       .then((response) => {
         localStorage.setItem("accessToken", response.data.access);
         localStorage.setItem("refreshToken", response.data.refresh);
+        localStorage.setItem("user_id", response.data.user_id);
         console.log(response.data);
-        dispatch(addUser(response.data.is_Employee));
+        dispatch(
+          addUser(response.data.is_employee)
+        );
         toast.success("Successfully Logged In!");
         navigate("/");
       })

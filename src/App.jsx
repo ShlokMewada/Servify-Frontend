@@ -23,6 +23,7 @@ import useService from "./hooks/useService";
 import PageNotFound from "./components/PageNotFound";
 import LoadingScreen from "./components/LoadingScreen";
 import EmployeeDashboard from "./components/EmployeeDashboard";
+import useUserInfo from "./hooks/useUserInfo";
 
 const App = () => {
   const [isLoading, setIsLoading] = useState(true);
@@ -132,6 +133,7 @@ const App = () => {
 
   useServiceCategory();
   useService();
+  useUserInfo();
 
   return (
     <div>

@@ -3,7 +3,7 @@ import logo from "../assets/Servify_Black_Logo.png";
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { viewService } from "../utils/serviceSlice";
-import { removeUser } from "../utils/userSlice";
+import { removeUser, removeUserProfile } from "../utils/userSlice";
 import toast from "react-hot-toast";
 
 const Header = () => {
@@ -40,6 +40,7 @@ const Header = () => {
     localStorage.removeItem("accessToken");
     localStorage.removeItem("refreshToken");
     dispatch(removeUser());
+    dispatch(removeUserProfile());
     toast.success("Successfully Logged Out!");
   };
 

@@ -1,6 +1,13 @@
+import { useSelector } from "react-redux";
 import Header from "./Header";
 
 const UserProfile = () => {
+  const userData = useSelector((store) => store.user.userProfile);
+
+  if (!userData) return;
+
+  const { user, address } = userData;
+
   return (
     <div>
       <Header />
@@ -21,8 +28,8 @@ const UserProfile = () => {
                 id="name"
                 type="text"
                 className="mt-1 block w-full px-4 py-3 bg-gray-50 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-aqua-500 focus:border-transparent"
-                placeholder="Shlok Mewada"
-                defaultValue="Shlok Mewada"
+                placeholder={user.first_name + " " + user.last_name}
+                defaultValue={user.first_name + " " + user.last_name}
               />
             </div>
             <div>
@@ -36,8 +43,8 @@ const UserProfile = () => {
                 id="username"
                 type="text"
                 className="mt-1 block w-full px-4 py-3 bg-gray-50 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-aqua-500 focus:border-transparent"
-                placeholder="shlokmewada"
-                defaultValue="shlokmewada"
+                placeholder={user.username}
+                defaultValue={user.username}
               />
             </div>
             <div>
@@ -51,8 +58,8 @@ const UserProfile = () => {
                 id="email"
                 type="email"
                 className="mt-1 block w-full px-4 py-3 bg-gray-50 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-aqua-500 focus:border-transparent"
-                placeholder="shlok@gmail.com"
-                defaultValue="shlok@gmail.com"
+                placeholder={user.email}
+                defaultValue={user.email}
               />
             </div>
             <div>
