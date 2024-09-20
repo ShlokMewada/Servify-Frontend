@@ -8,6 +8,8 @@ import "slick-carousel/slick/slick-theme.css";
 const Services = () => {
   const services = useSelector((store) => store.service.services);
 
+  if (!services) return
+
   const sliderSettings = (itemCount) => ({
     dots: false,
     infinite: false,

@@ -110,10 +110,10 @@ const App = () => {
             {
               element: <Employee />,
               children: [
-                // {
-                //   path: "/employee/dashboard",
-                //   element: <EmployeeDashboard />,
-                // },
+                {
+                  path: "/employee/dashboard",
+                  element: <EmployeeDashboard />,
+                },
               ],
             },
           ],
@@ -127,10 +127,6 @@ const App = () => {
     {
       path: "*",
       element: <PageNotFound />,
-    },
-    {
-      path: "/employee/dashboard",
-      element: <EmployeeDashboard />,
     },
   ]);
 

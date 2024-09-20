@@ -73,7 +73,10 @@ const Signup = ({ isEmployee }) => {
     formData.append("address", address.current.value);
     console.log(formData);
     await axiosInstance
-      .post("http://localhost:8000/signup/user/", formData)
+      .post(
+        `http://localhost:8000/signup/${!isEmployee ? "user" : "employee"}/`,
+        formData
+      )
       .then((response) => {
         console.log(response.data);
         dispatch(addUser(isEmployee));

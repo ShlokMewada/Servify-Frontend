@@ -8,7 +8,7 @@ import { FaStar } from "react-icons/fa";
 const ServiceDetails = () => {
   const viewService = useSelector((store) => store.service.viewService);
   const navigate = useNavigate();
-  const { image_url, name, description, price } = viewService;
+  const { image_url, name, description, price, reviews } = viewService;
 
   const descriptionParts = description
     .split(/\d\./)
@@ -18,25 +18,6 @@ const ServiceDetails = () => {
   const goToCart = () => {
     navigate("/cart");
   };
-
-  // Dummy review data - now an array of reviews
-  const dummyReviews = [
-    {
-      userName: "John Doe",
-      rating: 4.5,
-      date: "May 15, 2023",
-      comment:
-        "Great service! The technician was very professional and fixed my washing machine quickly. I'm very satisfied with the results.",
-    },
-    {
-      userName: "Jane Smith",
-      rating: 5,
-      date: "May 20, 2023",
-      comment:
-        "Excellent service! The technician arrived on time and did a thorough job. My dishwasher works like new now.",
-    },
-    // Add more reviews as needed
-  ];
 
   return (
     <div>
@@ -92,14 +73,14 @@ const ServiceDetails = () => {
             <h2 className="text-2xl font-bold text-gray-900">Reviews</h2>
             <div className="w-full h-[1px] bg-gray-400"></div>
             <div className="overflow-y-auto max-h-[350px] pr-2 scrollbar-thin scrollbar-thumb-gray-400 scrollbar-track-gray-100">
-              {dummyReviews.map((review, index) => (
+              {reviews.map((review) => (
                 <div
-                  key={index}
+                  key={review.id}
                   className="bg-white p-4 rounded-lg shadow-md w-full mb-4 last:mb-0"
                 >
                   <div className="flex justify-between items-center mb-3">
                     <h3 className="text-base font-semibold text-gray-800">
-                      {review.userName}
+                      {review.user.first_name + " " + review.user.last_name}
                     </h3>
                     <div className="flex items-center">
                       {[...Array(5)].map((_, i) => (
@@ -118,7 +99,9 @@ const ServiceDetails = () => {
                       </span>
                     </div>
                   </div>
-                  <p className="text-sm text-gray-600 mb-2">{review.date}</p>
+                  <p className="text-sm text-gray-600 mb-2">
+                    {review.created_at}
+                  </p>
                   <p className="text-sm text-gray-700">{review.comment}</p>
                 </div>
               ))}
