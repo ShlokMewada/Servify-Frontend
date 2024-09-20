@@ -26,7 +26,7 @@ const Signup = ({ isEmployee }) => {
   const dispatch = useDispatch();
 
   const navigateToSignInUser = () => {
-    navigate("../user/login");
+    navigate("../login");
   };
 
   const navigateToSignInEmployee = () => {

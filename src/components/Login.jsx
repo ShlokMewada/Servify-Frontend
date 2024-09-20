@@ -20,7 +20,7 @@ const Login = ({ isEmployee }) => {
   const dispatch = useDispatch();
 
   const navigateToSignUpUser = () => {
-    navigate("/user/signup");
+    navigate("/signup");
   };
 
   const navigateToSignUpEmployee = () => {
