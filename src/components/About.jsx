@@ -1,5 +1,6 @@
 import useCounter from "../hooks/useCounter";
 import Footer from "./Footer";
+import Header from "./Header";
 
 const About = () => {
   const professionalCount = useCounter(30000, 0, 1000);
@@ -7,11 +8,12 @@ const About = () => {
   const cityCount = useCounter(150, 0, 1000);
   const countryCount = useCounter(2, 0, 1000);
   return (
-    <div className="w-full bg-gray-50">
-      <div className="max-w-6xl flex flex-col items-center gap-y-16 mx-auto py-16 px-4">
-        <h1 className="text-6xl font-bold text-gray-800 tracking-tight">
-          About Us
-        </h1>
+    <div className="w-full bg-gray-50 py-12 ">
+      <div className="fixed top-0 left-0 right-0 z-10">
+        <Header />
+      </div>
+      <div className="max-w-6xl flex flex-col items-center gap-y-16 mx-auto px-4 mt-28">
+        <h1 className="text-5xl font-extrabold text-gray-800">About Us</h1>
         <div className="w-full h-[2px] bg-gradient-to-r from-gray-200 via-gray-400 to-gray-200"></div>
         <p className="text-gray-700 text-xl leading-relaxed text-center max-w-4xl">
           Servify is a platform offering a variety of services at home.

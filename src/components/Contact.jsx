@@ -2,6 +2,7 @@ import axios from "axios";
 import { useRef, useState } from "react";
 import { checkValidDataContact } from "../utils/validate";
 import Footer from "./Footer";
+import Header from "./Header";
 
 const Contact = () => {
   const name = useRef();
@@ -49,8 +50,11 @@ const Contact = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50 flex flex-col justify-between pt-10">
-      <div className="flex-grow flex items-center justify-center px-4 sm:px-6 lg:px-8">
+    <div className="min-h-screen bg-gray-50 flex flex-col justify-between py-12">
+      <div className="fixed top-0 left-0 right-0 z-10">
+        <Header />
+      </div>
+      <div className="flex-grow flex items-center justify-center px-4 sm:px-6 lg:px-8 mt-28">
         <form
           className="w-full max-w-md p-8 bg-white shadow-2xl rounded-lg space-y-6"
           onSubmit={(e) => {
