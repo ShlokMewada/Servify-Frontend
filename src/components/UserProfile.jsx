@@ -1,7 +1,10 @@
 import { useSelector } from "react-redux";
 import Header from "./Header";
+import useUserInfo from "../hooks/useUserInfo";
 
 const UserProfile = () => {
+  useUserInfo(); //getting user info through this hook(api call in it)
+
   const userData = useSelector((store) => store.user.userProfile);
 
   if (!userData) return;
