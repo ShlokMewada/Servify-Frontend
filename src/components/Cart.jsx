@@ -4,6 +4,7 @@ import { clearCart } from "../utils/cartSlice";
 import { Link } from "react-router-dom";
 import Header from "./Header";
 import Footer from "./Footer";
+import axiosInstance from "../utils/axiosInstance";
 
 const Cart = () => {
   const cart = useSelector((store) => store.cart.cart);
@@ -23,6 +24,37 @@ const Cart = () => {
 
   // Format the total price for display
   const formattedTotalPrice = totalPrice.toFixed(2);
+
+  const handlePayment = async () => {
+    await axiosInstance
+      .post("http://localhost:8000/payment/", { formattedTotalPrice })
+      .then((response) => {
+        const { order_id } = response.data;
+        if (!order_id) {
+          throw new Error("Order ID not received from backend.");
+        }
+
+        const options = {
+          key: import.meta.env.VITE_RAZORPAY_KEY, // Enter your Razorpay Key ID
+          amount: formattedTotalPrice * 100, // Amount in paise (formattedTotalPrice is in rupees)
+          currency: "INR",
+          name: "Your Company Name",
+          description: "Test Transaction",
+          order_id: order_id,
+          handler: function (response) {
+            alert(`Payment ID: ${response.razorpay_payment_id}`);
+            alert(`Order ID: ${response.razorpay_order_id}`);
+            alert(`Signature: ${response.razorpay_signature}`);
+          },
+        };
+
+        const rzp1 = new window.Razorpay(options);
+        rzp1.open();
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+  };
 
   return (
     <div className="min-h-screen bg-gray-50 py-12">
@@ -66,9 +98,6 @@ const Cart = () => {
                   <span className="text-lg font-semibold text-indigo-600">
                     ₹{(service.price * service.quantity).toFixed(2)}
                   </span>
-                  {/* <p className="hidden">
-                      {(totalPrice += service.price * service.quantity)}
-                    </p> */}
                 </div>
               ))}
             </div>
@@ -80,8 +109,13 @@ const Cart = () => {
                 <span className="text-xl font-extrabold text-green-600">
                   ₹{formattedTotalPrice}
                 </span>
-                <button className="ml-6 bg-yellow-500 hover:bg-yellow-600 text-white font-bold py-3 px-6 rounded-lg transition-all duration-200">
-                  Purchase
+
+                <button
+                  id="rzp-button1"
+                  onClick={handlePayment}
+                  className="ml-6 bg-blue-500 hover:bg-blue-600 text-white font-bold py-3 px-6 rounded-lg transition-all duration-200"
+                >
+                  Pay with Razorpay
                 </button>
               </div>
             </div>
