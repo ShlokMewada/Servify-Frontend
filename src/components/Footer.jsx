@@ -16,8 +16,12 @@ const Footer = () => {
             <li className="text-gray-600 text-sm">
               <Link to="/about">About Us</Link>
             </li>
-            <li className="text-gray-600 text-sm">Terms & Conditions</li>
-            <li className="text-gray-600 text-sm">Privacy Policy</li>
+            <li className="text-gray-600 text-sm">
+              <Link to="/terms&conditions">Terms & Conditions</Link>
+            </li>
+            <li className="text-gray-600 text-sm">
+              <Link to="/privacypolicy">Privacy Policy</Link>
+            </li>
           </ul>
           <ul className="flex flex-col gap-y-1">
             <li className="text-lg font-bold mb-3">For Customers</li>

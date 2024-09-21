@@ -23,6 +23,8 @@ import useService from "./hooks/useService";
 import PageNotFound from "./components/PageNotFound";
 import LoadingScreen from "./components/LoadingScreen";
 import EmployeeDashboard from "./components/EmployeeDashboard";
+import PrivacyPolicy from "./components/PrivacyPolicy";
+import TermsAndConditions from "./components/TermsAndConditions";
 
 const App = () => {
   const [isLoading, setIsLoading] = useState(true);
@@ -127,6 +129,14 @@ const App = () => {
     {
       path: "*",
       element: <PageNotFound />,
+    },
+    {
+      path: "/privacypolicy",
+      element: <PrivacyPolicy />,
+    },
+    {
+      path: "/terms&conditions",
+      element: <TermsAndConditions />,
     },
   ]);
 
