@@ -23,8 +23,11 @@ export const EmployeeProtectedRoute = () => {
 
 export const AuthenticatedRoute = () => {
   const user = useSelector((store) => store.user.user);
-  if (user !== null) {
-    return <Navigate to="/" replace />;
+  if (user !== null && user) {
+    return <Navigate to="/employee/dashboard" replace />
   }
+  if(user !== null && !user){
+    return <Navigate to="/" replace />
+  } // this changes should changed back if any problem in routing
   return <Outlet />;
 };

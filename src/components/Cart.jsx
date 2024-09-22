@@ -5,9 +5,15 @@ import { Link } from "react-router-dom";
 import Header from "./Header";
 import Footer from "./Footer";
 import axiosInstance from "../utils/axiosInstance";
+import toast from "react-hot-toast";
+import { useState } from "react";
 
 const Cart = () => {
   const cart = useSelector((store) => store.cart.cart);
+
+  const orderPlaceServices = cart.map(({ id, quantity }) => ({ id, quantity }));
+
+  const [paymentStatus, setPaymentStatus] = useState("Pending");
 
   const dispatch = useDispatch();
 
@@ -29,22 +35,23 @@ const Cart = () => {
     await axiosInstance
       .post("http://localhost:8000/payment/", { formattedTotalPrice })
       .then((response) => {
-        const { order_id } = response.data;
+        const { order_id, status } = response.data;
+        setPaymentStatus(status);
         if (!order_id) {
           throw new Error("Order ID not received from backend.");
         }
 
         const options = {
           key: import.meta.env.VITE_RAZORPAY_KEY, // Enter your Razorpay Key ID
-          amount: formattedTotalPrice * 100, // Amount in paise (formattedTotalPrice is in rupees)
+          amount: formattedTotalPrice, // Amount in paise (formattedTotalPrice is in rupees)
           currency: "INR",
-          name: "Your Company Name",
-          description: "Test Transaction",
+          name: "Servify",
+          description: "Transaction",
           order_id: order_id,
           handler: function (response) {
-            alert(`Payment ID: ${response.razorpay_payment_id}`);
-            alert(`Order ID: ${response.razorpay_order_id}`);
-            alert(`Signature: ${response.razorpay_signature}`);
+            // alert(`Payment ID: ${response.razorpay_payment_id}`);
+            // alert(`Order ID: ${response.razorpay_order_id}`);
+            // alert(`Signature: ${response.razorpay_signature}`);
           },
         };
 
@@ -54,6 +61,22 @@ const Cart = () => {
       .catch((error) => {
         console.error(error);
       });
+
+    if (paymentStatus === "Pending") {
+      return;
+    } else {
+      await axiosInstance
+        .post("http://localhost:8000/place-order/", {
+          services: orderPlaceServices,
+        })
+        .then((response) => {
+          dispatch(clearCart());
+          toast.success("Order Placed !");
+        })
+        .catch((error) => {
+          toast.error("There was an error while placing order!");
+        });
+    }
   };
 
   return (

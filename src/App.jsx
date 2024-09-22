@@ -60,14 +60,6 @@ const App = () => {
           ],
         },
         {
-          path: "/about",
-          element: <About />,
-        },
-        {
-          path: "/contact",
-          element: <Contact />,
-        },
-        {
           path: "/servicedetails",
           element: <ServiceDetails />,
         },
@@ -137,6 +129,14 @@ const App = () => {
     {
       path: "/terms&conditions",
       element: <TermsAndConditions />,
+    },
+    {
+      path: "/about",
+      element: <About />,
+    },
+    {
+      path: "/contact",
+      element: <Contact />,
     },
   ]);
 

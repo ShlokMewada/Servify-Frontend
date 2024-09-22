@@ -6,8 +6,9 @@ import { checkValidDataSignUp } from "../utils/validate";
 import GoogleAuth from "./GoogleAuth";
 import { useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { addUser } from "../utils/userSlice";
+import useEmployeeSignupCategories from "../hooks/useEmployeeSignupCategories";
 
 const Signup = ({ isEmployee }) => {
   const firstName = useRef();
@@ -22,17 +23,24 @@ const Signup = ({ isEmployee }) => {
   const [emailErrorMsg, setEmailErrorMsg] = useState();
   const [passwordErrorMsg, setPasswordErrorMsg] = useState();
   const [addressErrorMsg, setAddressErrorMsg] = useState();
+  const [categorySelect, setCategorySelect] = useState([]);
 
   const navigate = useNavigate();
 
   const dispatch = useDispatch();
 
+  useEmployeeSignupCategories(); // getting employee signup categories
+
+  const employeeSignupCategories = useSelector(
+    (store) => store.service.employeeSignupCategories
+  );
+
   const navigateToSignInUser = () => {
-    navigate("../login");
+    navigate("/login");
   };
 
   const navigateToSignInEmployee = () => {
-    navigate("../employee/login");
+    navigate("/employee/login");
   };
 
   const handleSubmit = async () => {
@@ -73,7 +81,7 @@ const Signup = ({ isEmployee }) => {
     formData.append("first_name", firstName.current.value);
     formData.append("last_name", lastName.current.value);
     formData.append("address", address.current.value);
-    console.log(formData);
+    isEmployee && formData.append("service_categories", categorySelect);
     await axiosInstance
       .post(
         `http://localhost:8000/signup/${!isEmployee ? "user" : "employee"}/`,
@@ -112,7 +120,9 @@ const Signup = ({ isEmployee }) => {
   return (
     <div className="min-h-screen bg-gray-100 flex items-center justify-center px-4 sm:px-6 lg:px-8 md:py-10">
       <form
-        className="w-full max-w-md p-8 bg-white shadow-2xl rounded-lg space-y-6"
+        className={`${
+          isEmployee ? "w-8/12" : "max-w-md"
+        } p-8 bg-white shadow-2xl rounded-lg space-y-6`}
         onSubmit={(e) => {
           e.preventDefault();
         }}
@@ -121,8 +131,8 @@ const Signup = ({ isEmployee }) => {
           Sign Up
         </h2>
 
-        <div className="flex gap-x-2">
-          <div>
+        <div className="flex gap-x-2 w-full">
+          <div className="w-full">
             <label
               htmlFor="firstname"
               className="block text-sm font-medium text-gray-700"
@@ -140,7 +150,7 @@ const Signup = ({ isEmployee }) => {
               <p className="mt-2 text-sm text-red-600">{firstNameErrorMsg}</p>
             )}
           </div>
-          <div>
+          <div className="w-full">
             <label
               htmlFor="lastname"
               className="block text-sm font-medium text-gray-700"
@@ -233,6 +243,38 @@ const Signup = ({ isEmployee }) => {
           {addressErrorMsg && (
             <p className="mt-2 text-sm text-red-600">{addressErrorMsg}</p>
           )}
+        </div>
+        <p className="block text-sm font-medium text-gray-700">
+          Select Category:
+        </p>
+        <div className="flex flex-wrap gap-5">
+          {employeeSignupCategories &&
+            isEmployee &&
+            employeeSignupCategories.map((category) => (
+              <div key={category.id} className="flex gap-x-1">
+                <p className="block text-sm font-medium text-gray-500">
+                  {category["service-category"]}
+                </p>
+                <input
+                  type="checkbox"
+                  value={category}
+                  onChange={(e) => {
+                    if (e.target.checked) {
+                      setCategorySelect((prevSelect) => [
+                        ...prevSelect,
+                        category.id,
+                      ]); // Add category
+                    } else {
+                      setCategorySelect(
+                        (prevSelect) =>
+                          prevSelect.filter((id) => id !== category.id) // Remove if unchecked
+                      );
+                    }
+                    console.log(categorySelect); // Updated categorySelect will log correctly
+                  }}
+                />
+              </div>
+            ))}
         </div>
 
         <button

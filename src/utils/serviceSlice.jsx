@@ -8,6 +8,7 @@ const serviceSlice = createSlice({
     onlyServices: null,
     viewService: null,
     viewServiceCategory: null,
+    employeeSignupCategories: null,
   },
 
   reducers: {
@@ -23,6 +24,9 @@ const serviceSlice = createSlice({
     viewServiceCategory: (state, action) => {
       state.viewServiceCategory = action.payload;
     },
+    addEmployeeSignupCategories: (state, action) => {
+      state.employeeSignupCategories = action.payload;
+    },
   },
 });
 
@@ -31,6 +35,7 @@ export const {
   addOnlyServices,
   viewService,
   viewServiceCategory,
+  addEmployeeSignupCategories,
 } = serviceSlice.actions;
 
 export default serviceSlice.reducer;
