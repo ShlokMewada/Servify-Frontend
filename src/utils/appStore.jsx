@@ -13,6 +13,7 @@ import {
   PURGE,
   REGISTER,
 } from "redux-persist"; //imported to solve error for { non-serializable values being used in Redux actions or state.}
+import employeeReducer from "./employeeSlice";
 
 const persistConfig = {
   key: "root",
@@ -24,6 +25,7 @@ const reducer = combineReducers({
   user: userReducer,
   cart: cartReducer,
   service: serviceReducer,
+  employee: employeeReducer,
 });
 
 const persistedReducer = persistReducer(persistConfig, reducer);

@@ -74,14 +74,38 @@ const Signup = ({ isEmployee }) => {
       return;
     }
 
-    const formData = new FormData();
-    formData.append("username", username.current.value);
-    formData.append("email", email.current.value);
-    formData.append("password", password.current.value);
-    formData.append("first_name", firstName.current.value);
-    formData.append("last_name", lastName.current.value);
-    formData.append("address", address.current.value);
-    isEmployee && formData.append("service_categories", categorySelect);
+    // const formData = new FormData();
+    // formData.append("username", username.current.value);
+    // formData.append("email", email.current.value);
+    // formData.append("password", password.current.value);
+    // formData.append("first_name", firstName.current.value);
+    // formData.append("last_name", lastName.current.value);
+    // formData.append("address", address.current.value);
+    // if (isEmployee) {
+    //   categorySelect.forEach((categoryId) => {
+    //     formData.append("service_categories", categoryId);
+    //   });
+    // }
+
+    const formData = isEmployee
+      ? {
+          username: username.current.value,
+          email: email.current.value,
+          password: password.current.value,
+          first_name: firstName.current.value,
+          last_name: lastName.current.value,
+          address: address.current.value,
+          service_categories: categorySelect,
+        }
+      : {
+          username: username.current.value,
+          email: email.current.value,
+          password: password.current.value,
+          first_name: firstName.current.value,
+          last_name: lastName.current.value,
+          address: address.current.value,
+        };
+
     await axiosInstance
       .post(
         `http://localhost:8000/signup/${!isEmployee ? "user" : "employee"}/`,
@@ -94,8 +118,8 @@ const Signup = ({ isEmployee }) => {
         // console.log(formData.get("email"))
         await axiosUnauthenticatedInstance
           .post("http://localhost:8000/login/", {
-            email: formData.get("email"),
-            password: formData.get("password"),
+            email: formData.email,
+            password: formData.password,
           })
           .then((response) => {
             localStorage.setItem("accessToken", response.data.access);
@@ -244,9 +268,11 @@ const Signup = ({ isEmployee }) => {
             <p className="mt-2 text-sm text-red-600">{addressErrorMsg}</p>
           )}
         </div>
-        <p className="block text-sm font-medium text-gray-700">
-          Select Category:
-        </p>
+        {isEmployee && (
+          <p className="block text-sm font-medium text-gray-700">
+            Select Category:
+          </p>
+        )}
         <div className="flex flex-wrap gap-5">
           {employeeSignupCategories &&
             isEmployee &&
@@ -257,20 +283,21 @@ const Signup = ({ isEmployee }) => {
                 </p>
                 <input
                   type="checkbox"
-                  value={category}
+                  value={category.id}
+                  checked={categorySelect.includes(category.id)} // Check if the category is selected
                   onChange={(e) => {
-                    if (e.target.checked) {
-                      setCategorySelect((prevSelect) => [
-                        ...prevSelect,
-                        category.id,
-                      ]); // Add category
-                    } else {
-                      setCategorySelect(
-                        (prevSelect) =>
-                          prevSelect.filter((id) => id !== category.id) // Remove if unchecked
-                      );
-                    }
-                    console.log(categorySelect); // Updated categorySelect will log correctly
+                    const { value } = e.target;
+                    setCategorySelect((prevSelect) => {
+                      if (e.target.checked) {
+                        // Add the category ID to the selected list
+                        return [...prevSelect, parseInt(value)]; // Ensure it's a number
+                      } else {
+                        // Remove the category ID from the selected list
+                        return prevSelect.filter(
+                          (id) => id !== parseInt(value)
+                        );
+                      }
+                    });
                   }}
                 />
               </div>

@@ -1,11 +1,14 @@
+import { useSelector } from "react-redux";
 import Footer from "./Footer";
 import Header from "./Header";
+import EmployeeHeader from "./EmployeeHeader";
 
 const PrivacyPolicy = () => {
+  const user = useSelector((store) => store.user.user);
   return (
     <div className="py-36">
       <div className="fixed top-0 left-0 right-0 z-10">
-        <Header />
+        {!user ? <Header /> : <EmployeeHeader />}
       </div>
       <div className="max-w-4xl mx-auto mt-10 p-4 bg-white rounded-lg shadow-lg">
         <h1 className="text-3xl font-bold mb-4 text-center">Privacy Policy</h1>

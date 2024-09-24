@@ -3,6 +3,8 @@ import { useRef, useState } from "react";
 import { checkValidDataContact } from "../utils/validate";
 import Footer from "./Footer";
 import Header from "./Header";
+import EmployeeHeader from "./EmployeeHeader";
+import { useSelector } from "react-redux";
 
 const Contact = () => {
   const name = useRef();
@@ -12,6 +14,8 @@ const Contact = () => {
   const [nameErrorMsg, setNameErrorMsg] = useState();
   const [emailErrorMsg, setEmailErrorMsg] = useState();
   const [phoneNoErrorMsg, setPhoneNoErrorMsg] = useState();
+
+  const user = useSelector((store) => store.user.user);
 
   const handleSubmit = async () => {
     const message = checkValidDataContact(
@@ -52,7 +56,7 @@ const Contact = () => {
   return (
     <div className="min-h-screen bg-gray-50 flex flex-col justify-between py-12">
       <div className="fixed top-0 left-0 right-0 z-10">
-        <Header />
+        {!user ? <Header /> : <EmployeeHeader />}
       </div>
       <div className="flex-grow flex items-center justify-center px-4 sm:px-6 lg:px-8 mt-28">
         <form

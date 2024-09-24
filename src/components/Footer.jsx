@@ -24,7 +24,9 @@ const Footer = () => {
             </li>
           </ul>
           <ul className="flex flex-col gap-y-1">
-            <li className="text-lg font-bold mb-3">For Customers</li>
+            <li className="text-lg font-bold mb-3">
+              {!user ? "For Customers" : "For Employees"}
+            </li>
             <li className="text-gray-600 text-sm">
               <Link to="/contact">Contact Us</Link>
             </li>

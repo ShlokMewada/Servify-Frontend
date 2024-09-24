@@ -106,6 +106,13 @@ const Header = () => {
             </Link>
           </li>
         </ul>
+        {user === false && (
+          <div>
+            <button className="cursor-pointer py-2 px-4 border border-transparent rounded-md shadow-sm text-md font-medium text-white bg-yellow-500 hover:bg-yellow-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-yellow-400">
+              <Link to="/orderhistory">Order History</Link>
+            </button>
+          </div>
+        )}
         {user === null ? (
           <div className="flex gap-x-3">
             <div className="font-semibold cursor-pointer">

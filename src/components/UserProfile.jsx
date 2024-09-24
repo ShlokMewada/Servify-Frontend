@@ -67,17 +67,17 @@ const UserProfile = () => {
             </div>
             <div>
               <label
-                htmlFor="phone"
+                htmlFor="address"
                 className="block text-sm font-medium text-gray-700 mb-2"
               >
-                Phone
+                address
               </label>
               <input
-                id="phone"
-                type="tel"
+                id="address"
+                type="text"
                 className="mt-1 block w-full px-4 py-3 bg-gray-50 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-aqua-500 focus:border-transparent"
-                placeholder=""
-                defaultValue=""
+                placeholder={address}
+                defaultValue={address}
               />
             </div>
           </div>

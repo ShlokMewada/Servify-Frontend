@@ -1,12 +1,15 @@
 import React from "react";
 import Header from "./Header";
 import Footer from "./Footer";
+import { useSelector } from "react-redux";
+import EmployeeHeader from "./EmployeeHeader";
 
 const TermsAndConditions = () => {
+  const user = useSelector((store) => store.user.user);
   return (
     <div className="py-36">
       <div className="fixed top-0 left-0 right-0 z-10">
-        <Header />
+        {!user ? <Header /> : <EmployeeHeader />}
       </div>
       <div className="flex justify-center items-center min-h-screen">
         {/* Container Box */}

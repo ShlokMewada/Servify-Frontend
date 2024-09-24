@@ -1,16 +1,19 @@
+import { useSelector } from "react-redux";
 import useCounter from "../hooks/useCounter";
 import Footer from "./Footer";
 import Header from "./Header";
+import EmployeeHeader from "./EmployeeHeader";
 
 const About = () => {
   const professionalCount = useCounter(30000, 0, 1000);
   const customerCount = useCounter(4, 0, 1000);
   const cityCount = useCounter(150, 0, 1000);
   const countryCount = useCounter(2, 0, 1000);
+  const user = useSelector((store) => store.user.user);
   return (
     <div className="w-full bg-gray-50 py-12 ">
       <div className="fixed top-0 left-0 right-0 z-10">
-        <Header />
+        {!user ? <Header /> : <EmployeeHeader />}
       </div>
       <div className="max-w-6xl flex flex-col items-center gap-y-16 mx-auto px-4 mt-28">
         <h1 className="text-5xl font-extrabold text-gray-800">About Us</h1>

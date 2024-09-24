@@ -25,6 +25,7 @@ import LoadingScreen from "./components/LoadingScreen";
 import EmployeeDashboard from "./components/EmployeeDashboard";
 import PrivacyPolicy from "./components/PrivacyPolicy";
 import TermsAndConditions from "./components/TermsAndConditions";
+import OrderHistory from "./components/OrderHistory";
 
 const App = () => {
   const [isLoading, setIsLoading] = useState(true);
@@ -77,6 +78,10 @@ const App = () => {
             {
               path: "/userprofile",
               element: <UserProfile />,
+            },
+            {
+              path: "/orderhistory",
+              element: <OrderHistory />,
             },
           ],
         },
