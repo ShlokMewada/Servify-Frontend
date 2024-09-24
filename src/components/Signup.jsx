@@ -125,6 +125,8 @@ const Signup = ({ isEmployee }) => {
             localStorage.setItem("accessToken", response.data.access);
             localStorage.setItem("refreshToken", response.data.refresh);
             localStorage.setItem("user_id", response.data.user_id);
+            isEmployee &&
+              localStorage.setItem("employee_id", response.data.employee_id);
             console.log(response.data);
             dispatch(addUser(response.data.is_employee));
             toast.success("Successfully Signed Up!");

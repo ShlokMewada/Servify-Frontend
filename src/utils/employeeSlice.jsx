@@ -4,6 +4,7 @@ const employeeSlice = createSlice({
   name: "employee",
 
   initialState: {
+    employeeProfile: null,
     serviceRequests: null,
   },
 
@@ -11,9 +12,12 @@ const employeeSlice = createSlice({
     addServiceRequests: (state, action) => {
       state.serviceRequests = action.payload;
     },
+    addEmployeeProfile: (state, action) => {
+      state.employeeProfile = action.payload;
+    },
   },
 });
 
-export const { addServiceRequests } = employeeSlice.actions;
+export const { addServiceRequests, addEmployeeProfile } = employeeSlice.actions;
 
 export default employeeSlice.reducer;

@@ -28,7 +28,7 @@ const EmployeeHeader = () => {
 
         <div className="flex gap-x-5 items-center">
           <div className="font-semibold text-xl cursor-pointer border-2 flex items-center justify-center w-9 h-9 rounded-full">
-            <Link to="/employeeprofile">
+            <Link to="/employee/profile">
               <i className="fa-solid fa-user"></i>
             </Link>
           </div>

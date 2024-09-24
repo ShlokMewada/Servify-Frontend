@@ -6,6 +6,7 @@ const userSlice = createSlice({
   initialState: {
     user: null,
     userProfile: null,
+    orderHistory: null,
   },
 
   reducers: {
@@ -21,10 +22,18 @@ const userSlice = createSlice({
     removeUserProfile: (state) => {
       state.userProfile = null;
     },
+    addOrderHistory: (state, action) => {
+      state.orderHistory = action.payload;
+    },
   },
 });
 
-export const { addUser, removeUser, addUserProfile, removeUserProfile } =
-  userSlice.actions;
+export const {
+  addUser,
+  removeUser,
+  addUserProfile,
+  removeUserProfile,
+  addOrderHistory,
+} = userSlice.actions;
 
 export default userSlice.reducer;

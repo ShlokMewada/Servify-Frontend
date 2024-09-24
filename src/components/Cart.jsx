@@ -34,7 +34,7 @@ const Cart = () => {
   const handlePayment = async () => {
     await axiosInstance
       .post("http://localhost:8000/payment/", { formattedTotalPrice })
-      .then((response) => {
+      .then(async (response) => {
         const { order_id, status } = response.data;
         setPaymentStatus(status);
         if (!order_id) {
@@ -57,26 +57,22 @@ const Cart = () => {
 
         const rzp1 = new window.Razorpay(options);
         rzp1.open();
+        
+        await axiosInstance
+          .post("http://localhost:8000/place-order/", {
+            services: orderPlaceServices,
+          })
+          .then((response) => {
+            dispatch(clearCart());
+            toast.success("Order Placed !");
+          })
+          .catch((error) => {
+            toast.error("There was an error while placing order!");
+          });
       })
       .catch((error) => {
         console.error(error);
       });
-
-    if (paymentStatus === "Pending") {
-      return;
-    } else {
-      await axiosInstance
-        .post("http://localhost:8000/place-order/", {
-          services: orderPlaceServices,
-        })
-        .then((response) => {
-          dispatch(clearCart());
-          toast.success("Order Placed !");
-        })
-        .catch((error) => {
-          toast.error("There was an error while placing order!");
-        });
-    }
   };
 
   return (

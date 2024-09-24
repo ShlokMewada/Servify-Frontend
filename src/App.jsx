@@ -26,6 +26,7 @@ import EmployeeDashboard from "./components/EmployeeDashboard";
 import PrivacyPolicy from "./components/PrivacyPolicy";
 import TermsAndConditions from "./components/TermsAndConditions";
 import OrderHistory from "./components/OrderHistory";
+import EmployeeProfile from "./components/EmployeeProfile";
 
 const App = () => {
   const [isLoading, setIsLoading] = useState(true);
@@ -112,6 +113,10 @@ const App = () => {
                 {
                   path: "/employee/dashboard",
                   element: <EmployeeDashboard />,
+                },
+                {
+                  path: "/employee/profile",
+                  element: <EmployeeProfile />,
                 },
               ],
             },
