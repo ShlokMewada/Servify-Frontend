@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 import Header from "./Header";
 import Footer from "./Footer";
 import { FaStar } from "react-icons/fa";
+import ServiceCard from "./ServiceCard";
 
 const ServiceDetails = () => {
   const viewService = useSelector((store) => store.service.viewService);
@@ -106,6 +107,14 @@ const ServiceDetails = () => {
                 </div>
               ))}
             </div>
+          </div>
+        </div>
+        <div className="mt-8 border-2 border-gray-300 p-3 rounded-lg">
+          <h2 className="text-2xl font-bold text-gray-900 mb-4">Cart</h2>
+          <div className="w-full h-[1px] bg-gray-400 mb-4"></div>
+          {/* Empty section for cart card */}
+          <div className="bg-white p-4 rounded-lg shadow-md">
+            <ServiceCard serviceData={viewService} itemState={false} />
           </div>
         </div>
       </div>

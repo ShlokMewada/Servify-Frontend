@@ -134,12 +134,13 @@ const Signup = ({ isEmployee }) => {
           })
           .catch((error) => {
             console.error(error);
-            toast.error("Invalid Email or Password!");
+            toast.error(error.response.data.error);
           });
       })
       .catch((error) => {
         console.error(error);
-        toast.error("Something went wrong!, please try again.");
+        console.log(error.response.data.error);
+        toast.error(error.response.data.error);
       });
   };
 
@@ -259,13 +260,13 @@ const Signup = ({ isEmployee }) => {
           >
             Address
           </label>
-          <input
+          <textarea
             id="address"
-            className="mt-1 block w-full px-3 py-2 bg-gray-50 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-gray-500 focus:border-transparent"
-            type="text"
+            className="mt-1 block w-full px-3 py-2 bg-gray-50 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-gray-500 focus:border-transparent resize-none"
+            rows="4"
             placeholder="Enter Address"
             ref={address}
-          />
+          ></textarea>
           {addressErrorMsg && (
             <p className="mt-2 text-sm text-red-600">{addressErrorMsg}</p>
           )}

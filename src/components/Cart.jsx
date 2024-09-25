@@ -57,7 +57,7 @@ const Cart = () => {
 
         const rzp1 = new window.Razorpay(options);
         rzp1.open();
-        
+
         await axiosInstance
           .post("http://localhost:8000/place-order/", {
             services: orderPlaceServices,
@@ -72,6 +72,20 @@ const Cart = () => {
       })
       .catch((error) => {
         console.error(error);
+      });
+  };
+
+  const cashOnDelivery = async () => {
+    await axiosInstance
+      .post("http://localhost:8000/place-order/", {
+        services: orderPlaceServices,
+      })
+      .then((response) => {
+        dispatch(clearCart());
+        toast.success("Order Placed !");
+      })
+      .catch((error) => {
+        toast.error("There was an error while placing order!");
       });
   };
 
@@ -119,14 +133,22 @@ const Cart = () => {
                   </span>
                 </div>
               ))}
+              <div className="flex justify-end gap-x-10 items-center">
+                <span className="text-lg font-medium text-gray-700">
+                  Total Price:
+                </span>
+                <span className="text-lg font-semibold text-indigo-600">
+                  ₹{formattedTotalPrice}
+                </span>
+              </div>
             </div>
             <div className="flex justify-between items-center mt-6 pt-4 border-t">
               <span className="text-xl font-bold text-gray-800">
-                Total Price:
+                Total Price With GST:
               </span>
               <div>
                 <span className="text-xl font-extrabold text-green-600">
-                  ₹{formattedTotalPrice}
+                  ₹{formattedTotalPrice * 1.18}
                 </span>
 
                 <button
@@ -135,6 +157,12 @@ const Cart = () => {
                   className="ml-6 bg-blue-500 hover:bg-blue-600 text-white font-bold py-3 px-6 rounded-lg transition-all duration-200"
                 >
                   Pay with Razorpay
+                </button>
+                <button
+                  className="ml-6 bg-green-500 hover:bg-green-600 text-white font-bold py-3 px-6 rounded-lg transition-all duration-200"
+                  onClick={cashOnDelivery}
+                >
+                  Cash On Delivery
                 </button>
               </div>
             </div>

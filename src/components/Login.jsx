@@ -60,7 +60,7 @@ const Login = ({ isEmployee }) => {
       })
       .catch((error) => {
         console.error(error);
-        toast.error("Invalid Email or Password!");
+        toast.error(error.response.data.error);
       });
   };
 

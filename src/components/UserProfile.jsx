@@ -72,13 +72,13 @@ const UserProfile = () => {
               >
                 address
               </label>
-              <input
+              <textarea
                 id="address"
-                type="text"
-                className="mt-1 block w-full px-4 py-3 bg-gray-50 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-aqua-500 focus:border-transparent"
+                rows="4"
+                className="mt-1 block w-full px-4 py-3 bg-gray-50 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-aqua-500 focus:border-transparent resize-none"
                 placeholder={address}
                 defaultValue={address}
-              />
+              ></textarea>
             </div>
           </div>
           <div className="flex justify-end mt-8">
