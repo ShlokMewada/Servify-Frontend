@@ -31,9 +31,11 @@ const Cart = () => {
   // Format the total price for display
   const formattedTotalPrice = totalPrice.toFixed(2);
 
+  const totalPriceWithGST = formattedTotalPrice * 1.18;
+
   const handlePayment = async () => {
     await axiosInstance
-      .post("http://localhost:8000/payment/", { formattedTotalPrice })
+      .post("http://localhost:8000/payment/", { totalPriceWithGST })
       .then(async (response) => {
         const { order_id, status } = response.data;
         setPaymentStatus(status);
@@ -43,7 +45,7 @@ const Cart = () => {
 
         const options = {
           key: import.meta.env.VITE_RAZORPAY_KEY, // Enter your Razorpay Key ID
-          amount: formattedTotalPrice, // Amount in paise (formattedTotalPrice is in rupees)
+          amount: totalPriceWithGST,
           currency: "INR",
           name: "Servify",
           description: "Transaction",
@@ -148,7 +150,7 @@ const Cart = () => {
               </span>
               <div>
                 <span className="text-xl font-extrabold text-green-600">
-                  ₹{formattedTotalPrice * 1.18}
+                  ₹{totalPriceWithGST}
                 </span>
 
                 <button
