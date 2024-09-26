@@ -34,61 +34,90 @@ const Cart = () => {
   const totalPriceWithGST = formattedTotalPrice * 1.18;
 
   const handlePayment = async () => {
-    await axiosInstance
-      .post("http://localhost:8000/payment/", { totalPriceWithGST })
-      .then(async (response) => {
-        const { order_id, status } = response.data;
-        setPaymentStatus(status);
-        if (!order_id) {
-          throw new Error("Order ID not received from backend.");
+    try {
+      // Step 1: Create Razorpay order by calling the backend
+      const response = await axiosInstance.post(
+        "http://localhost:8000/payment/",
+        {
+          totalPriceWithGST,
         }
+      );
 
-        const options = {
-          key: import.meta.env.VITE_RAZORPAY_KEY, // Enter your Razorpay Key ID
-          amount: totalPriceWithGST,
-          currency: "INR",
-          name: "Servify",
-          description: "Transaction",
-          order_id: order_id,
-          handler: function (response) {
-            // alert(`Payment ID: ${response.razorpay_payment_id}`);
-            // alert(`Order ID: ${response.razorpay_order_id}`);
-            // alert(`Signature: ${response.razorpay_signature}`);
-          },
-        };
+      const { order_id, status } = response.data;
+      setPaymentStatus(status); // Set payment status in state
 
-        const rzp1 = new window.Razorpay(options);
-        rzp1.open();
+      if (!order_id) {
+        throw new Error("Order ID not received from backend.");
+      }
 
-        await axiosInstance
-          .post("http://localhost:8000/place-order/", {
-            services: orderPlaceServices,
-          })
-          .then((response) => {
-            dispatch(clearCart());
-            toast.success("Order Placed !");
-          })
-          .catch((error) => {
-            toast.error("There was an error while placing order!");
-          });
-      })
-      .catch((error) => {
-        console.error(error);
-      });
+      // Step 2: Initialize Razorpay checkout with options
+      const options = {
+        key: import.meta.env.VITE_RAZORPAY_KEY, // Razorpay Key ID
+        amount: totalPriceWithGST, // Convert rupees to paise (Razorpay needs amount in paise)
+        currency: "INR",
+        name: "Servify",
+        description: "Transaction",
+        order_id: order_id,
+        handler: async function (response) {
+          // Razorpay checkout completed, now verify the payment
+          await verifyPayment(
+            response.razorpay_payment_id,
+            response.razorpay_order_id,
+            response.razorpay_signature
+          );
+        },
+      };
+
+      const rzp1 = new window.Razorpay(options);
+      rzp1.open();
+    } catch (error) {
+      console.error("Payment failed:", error);
+    }
   };
 
-  const cashOnDelivery = async () => {
-    await axiosInstance
-      .post("http://localhost:8000/place-order/", {
+  // Step 3: Verify payment function to call the backend
+  const verifyPayment = async (
+    razorpay_payment_id,
+    razorpay_order_id,
+    razorpay_signature
+  ) => {
+    try {
+      // Call your backend to verify the payment
+      const response = await axiosInstance.post(
+        "http://localhost:8000/verifypayment/",
+        {
+          razorpay_payment_id,
+          razorpay_order_id,
+          razorpay_signature,
+        }
+      );
+
+      const { status } = response.data; // Backend will return the updated status
+
+      if (status === "Paid") {
+        // Step 4: Payment verified, proceed to place the order
+        await placeOrder();
+      } else {
+        toast.error("Payment verification failed.");
+      }
+    } catch (error) {
+      console.error("Verification failed:", error);
+    }
+  };
+
+  // Step 5: Place the order after payment verification
+  const placeOrder = async () => {
+    try {
+      await axiosInstance.post("http://localhost:8000/place-order/", {
         services: orderPlaceServices,
-      })
-      .then((response) => {
-        dispatch(clearCart());
-        toast.success("Order Placed !");
-      })
-      .catch((error) => {
-        toast.error("There was an error while placing order!");
       });
+      setPaymentStatus("Paid");
+      dispatch(clearCart()); // Clear the cart after order is placed
+      toast.success("Order Placed !");
+    } catch (error) {
+      toast.error("There was an error while placing the order!");
+      console.error("Order placement failed:", error);
+    }
   };
 
   return (
@@ -162,7 +191,7 @@ const Cart = () => {
                 </button>
                 <button
                   className="ml-6 bg-green-500 hover:bg-green-600 text-white font-bold py-3 px-6 rounded-lg transition-all duration-200"
-                  onClick={cashOnDelivery}
+                  onClick={placeOrder}
                 >
                   Cash On Delivery
                 </button>
@@ -184,6 +213,34 @@ const Cart = () => {
           <p className="text-xl text-gray-500 mt-10 text-center">
             Your cart is empty.
           </p>
+          {paymentStatus === "Paid" && (
+            <div className="flex items-center bg-green-100 border-l-4 border-green-500 text-green-700 p-4 max-w-md h-[150px] rounded-md my-5">
+              <div className="flex">
+                <div className="py-1">
+                  <svg
+                    className="h-6 w-6 text-green-500 mr-4"
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M5 13l4 4L19 7"
+                    />
+                  </svg>
+                </div>
+                <div>
+                  <p className="font-bold">Order Confirmed!</p>
+                  <p className="text-sm">
+                    Congratulations! Your order has been successfully placed.
+                  </p>
+                </div>
+              </div>
+            </div>
+          )}
           <button className="bg-black rounded-lg text-white hover:bg-opacity-80 px-8 py-2">
             <Link to="/">Home</Link>
           </button>
