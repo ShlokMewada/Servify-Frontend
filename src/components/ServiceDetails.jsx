@@ -3,7 +3,13 @@ import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import Header from "./Header";
 import Footer from "./Footer";
-import { FaStar } from "react-icons/fa";
+import {
+  FaCheckCircle,
+  FaClock,
+  FaShieldAlt,
+  FaStar,
+  FaUserTie,
+} from "react-icons/fa";
 import ServiceCard from "./ServiceCard";
 
 const ServiceDetails = () => {
@@ -20,6 +26,13 @@ const ServiceDetails = () => {
     navigate("/cart");
   };
 
+  const highlights = [
+    { icon: FaCheckCircle, text: "Quality Guaranteed" },
+    { icon: FaClock, text: "On-Time Service" },
+    { icon: FaUserTie, text: "Professional Staff" },
+    { icon: FaShieldAlt, text: "Insured Service" },
+  ];
+
   return (
     <div>
       <Header />
@@ -32,23 +45,30 @@ const ServiceDetails = () => {
               alt={name}
               className="w-full h-48 object-cover rounded-lg shadow-md"
             />
-            {/* Other Services Section */}
-            <div>
-              <h2 className="text-xl font-bold text-gray-900 mb-4">
-                Other Services
+            {/* Why Choose Us Section */}
+            <div className="mt-4 border-2 p-4 rounded-lg">
+              <h2 className="text-xl font-bold text-gray-900 mb-3">
+                Service Overview
               </h2>
-              <ul className="space-y-3">
-                {["Repair", "Installation", "Maintenance", "Cleaning"].map(
-                  (service) => (
-                    <li
-                      key={service}
-                      className="p-3 bg-gray-50 border border-gray-200 rounded-lg hover:shadow-lg transition cursor-pointer text-sm font-medium text-gray-700 hover:bg-gray-100"
-                    >
-                      Washing Machine {service}
-                    </li>
-                  )
-                )}
-              </ul>
+              <div className="grid grid-cols-2 gap-3">
+                {highlights.map((item, index) => (
+                  <div key={index} className="flex items-center">
+                    <item.icon className="text-blue-500 mr-2" />
+                    <span className="text-sm text-gray-700">{item.text}</span>
+                  </div>
+                ))}
+              </div>
+              <div className="mt-3 pt-3 border-t border-gray-200">
+                <h3 className="font-semibold text-gray-800 mb-2">
+                  How it works:
+                </h3>
+                <ol className="text-sm text-gray-600 list-decimal list-inside">
+                  <li>Book your preferred time slot</li>
+                  <li>Receive confirmation</li>
+                  <li>Professional arrives and completes service</li>
+                  <li>Provide feedback</li>
+                </ol>
+              </div>
             </div>
           </div>
 

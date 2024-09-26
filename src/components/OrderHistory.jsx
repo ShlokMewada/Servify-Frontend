@@ -5,6 +5,7 @@ import axiosInstance from "../utils/axiosInstance";
 import toast from "react-hot-toast";
 import Header from "./Header";
 import Footer from "./Footer";
+import Popup from "./Popup";
 
 const OrderHistory = () => {
   const { getOrderHistory, orderHistory } = useOrderHistory();
@@ -12,6 +13,12 @@ const OrderHistory = () => {
   const [activeReview, setActiveReview] = useState(null);
   const [rating, setRating] = useState(0);
   const [comment, setComment] = useState("");
+
+  const [isPopupOpen, setIsPopupOpen] = useState(false);
+
+  const togglePopup = () => {
+    setIsPopupOpen(!isPopupOpen);
+  };
 
   const handleSubmitReview = async (service, user) => {
     await axiosInstance
@@ -47,7 +54,21 @@ const OrderHistory = () => {
               key={order.id}
               className="bg-white shadow-md rounded-lg mb-4 p-4"
             >
-              <h2 className="text-xl font-semibold">{order.service_name}</h2>
+              <div className="flex justify-between">
+                <h2 className="text-xl font-semibold">{order.service_name}</h2>
+                <div className="flex items-center justify-center">
+                  {/* Button to open the popup */}
+                  <button
+                    onClick={togglePopup}
+                    className="px-4 py-2 bg-green-500 text-white rounded-lg hover:bg-green-600 transition"
+                  >
+                    Claim Warranty
+                  </button>
+
+                  {/* Conditionally render the popup */}
+                  {isPopupOpen && <Popup togglePopup={togglePopup} />}
+                </div>
+              </div>
               <p className="text-gray-600">Date: {order.date}</p>
               <p className="text-gray-600">Amount: ₹{order.total_amount}</p>
               {order.review ? (
