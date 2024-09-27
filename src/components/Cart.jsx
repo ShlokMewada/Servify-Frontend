@@ -179,13 +179,20 @@ const Cart = () => {
                   </span>
                 </div>
               ))}
-              <div className="flex justify-end gap-x-10 items-center border-b pb-2">
-                <span className="text-lg font-medium text-gray-700">
-                  Total Price:
-                </span>
-                <span className="text-lg font-semibold text-indigo-600">
-                  ₹{formattedTotalPrice}
-                </span>
+              <div className="flex flex-col">
+                <div className="w-full flex justify-end gap-x-10 items-center border-b pb-2">
+                  <span className="text-lg font-medium text-gray-700">
+                    Total Price:
+                  </span>
+                  <span className="text-lg font-semibold text-indigo-600">
+                    ₹{formattedTotalPrice}
+                  </span>
+                </div>
+                <div className="w-full flex justify-end border-b pt-2 pb-2">
+                  <span className="text-lg font-medium text-gray-700">
+                    18% GST will be applied
+                  </span>
+                </div>
               </div>
 
               <div className="flex items-center gap-x-3 pt-2">

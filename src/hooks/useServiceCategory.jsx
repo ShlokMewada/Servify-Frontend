@@ -21,6 +21,10 @@ const useServiceCategory = () => {
   };
   useEffect(() => {
     getServiceCategory();
+    const intervalId = setInterval(getServiceCategory, 15000);
+
+    // Clean up the interval when the component unmounts
+    return () => clearInterval(intervalId);
   }, []);
 };
 
