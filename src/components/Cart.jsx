@@ -13,6 +13,8 @@ const Cart = () => {
 
   const orderPlaceServices = cart.map(({ id, quantity }) => ({ id, quantity }));
 
+  const [couponCode, setCouponCode] = useState();
+
   const [paymentStatus, setPaymentStatus] = useState("Pending");
 
   const dispatch = useDispatch();
@@ -31,7 +33,7 @@ const Cart = () => {
   // Format the total price for display
   const formattedTotalPrice = totalPrice.toFixed(2);
 
-  const totalPriceWithGST = formattedTotalPrice * 1.18;
+  const totalPriceWithGST = (formattedTotalPrice * 1.18).toFixed(2);
 
   const handlePayment = async () => {
     try {
@@ -120,6 +122,19 @@ const Cart = () => {
     }
   };
 
+  const applyCouponCode = async () => {
+    try {
+      await axiosInstance.post("http://localhost:8000/couponcode/", {
+        couponCode: couponCode,
+        totalPrice: totalPriceWithGST,
+      });
+      toast.success("Coupon code applied !");
+    } catch (error) {
+      toast.error(`${error.message}!`);
+      console.error("Coupon code can not be applied :", error);
+    }
+  };
+
   return (
     <div className="min-h-screen bg-gray-50 py-12">
       <div className="fixed top-0 left-0 right-0 z-10">
@@ -164,13 +179,45 @@ const Cart = () => {
                   </span>
                 </div>
               ))}
-              <div className="flex justify-end gap-x-10 items-center">
+              <div className="flex justify-end gap-x-10 items-center border-b pb-2">
                 <span className="text-lg font-medium text-gray-700">
                   Total Price:
                 </span>
                 <span className="text-lg font-semibold text-indigo-600">
                   ₹{formattedTotalPrice}
                 </span>
+              </div>
+
+              <div className="flex items-center gap-x-3 pt-2">
+                <span className="text-lg font-medium text-gray-700">
+                  Coupon Code :{" "}
+                </span>
+                <input
+                  type="text"
+                  placeholder={
+                    formattedTotalPrice < 100
+                      ? "Total Price should be more than ₹100"
+                      : "Enter Coupon code"
+                  }
+                  className={`p-2 w-1/4 border rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent shadow-md ${
+                    formattedTotalPrice < 100 &&
+                    "cursor-not-allowed placeholder-red-500"
+                  }`}
+                  disabled={formattedTotalPrice < 100.0}
+                  value={couponCode}
+                  onChange={(e) => {
+                    setCouponCode(e.target.value);
+                  }}
+                />
+                <button
+                  disabled={formattedTotalPrice < 100.0}
+                  className={`py-2 px-6 font-semibold bg-green-500 hover:bg-green-600 border border-green-500 hover:border-green-600 text-white rounded-lg ${
+                    formattedTotalPrice < 100 && "cursor-not-allowed"
+                  }`}
+                  onClick={applyCouponCode}
+                >
+                  Apply
+                </button>
               </div>
             </div>
             <div className="flex justify-between items-center mt-6 pt-4 border-t">

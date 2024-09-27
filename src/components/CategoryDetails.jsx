@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 import ServiceCard from "./ServiceCard";
 import Header from "./Header";
 import Footer from "./Footer";
+import { FaHandsHelping, FaStar, FaThumbsUp, FaTools } from "react-icons/fa";
 
 const CategoryDetails = () => {
   const category = useSelector((store) => store.service.viewServiceCategory);
@@ -11,6 +12,13 @@ const CategoryDetails = () => {
   const { image_url, name, description, services } = category;
 
   const navigate = useNavigate();
+
+  const highlights = [
+    { icon: FaThumbsUp, text: "Trusted by Thousands" },
+    { icon: FaTools, text: "Expert Solutions" },
+    { icon: FaHandsHelping, text: "Customer Support" },
+    { icon: FaStar, text: "Top-Rated Service" },
+  ];
 
   return (
     <div>
@@ -24,24 +32,25 @@ const CategoryDetails = () => {
               alt={name}
               className="w-full h-48 object-cover rounded-lg shadow-md"
             />
-            <div>
+            <div className="mt-4 border-2 p-4 rounded-lg">
               <h2 className="text-xl font-bold text-gray-900 mb-4">
-                How It Works
+                What We Offer
               </h2>
-              <p className="text-sm text-gray-700">
-                1. Book a service online
-                <br />
-                2. Our expert visits at your convenience
-                <br />
-                3. Get your appliance fixed or maintained
-              </p>
+              <ul className="space-y-2">
+                {highlights.map((item, index) => (
+                  <li key={index} className="flex items-center space-x-2">
+                    <item.icon className="text-blue-500" />
+                    <span className="text-sm text-gray-700">{item.text}</span>
+                  </li>
+                ))}
+              </ul>
             </div>
           </div>
 
           {/* Column 2: Service List */}
-          <div className="flex flex-col space-y-4 w-9/12 border-2 border-gray-300 p-3 rounded-lg">
+          <div className="flex flex-col space-y-4 w-9/12 border-2 border-gray-300 p-3 rounded-lg overflow-y-auto max-h-[500px] pr-2 scrollbar-thin scrollbar-thumb-gray-400 scrollbar-track-gray-100">
             <h1 className="text-3xl font-extrabold text-gray-800 mb-4">
-              {name} Services
+              {name}
             </h1>
             <div className="flex flex-wrap gap-4">
               {services.map((serviceItems) => (

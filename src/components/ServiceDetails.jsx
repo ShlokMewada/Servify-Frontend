@@ -45,7 +45,7 @@ const ServiceDetails = () => {
               alt={name}
               className="w-full h-48 object-cover rounded-lg shadow-md"
             />
-            {/* Why Choose Us Section */}
+            {/* Service Overview */}
             <div className="mt-4 border-2 p-4 rounded-lg">
               <h2 className="text-xl font-bold text-gray-900 mb-3">
                 Service Overview

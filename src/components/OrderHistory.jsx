@@ -69,7 +69,9 @@ const OrderHistory = () => {
                   {isPopupOpen && <Popup togglePopup={togglePopup} />}
                 </div>
               </div>
-              <p className="text-gray-600">Date: {order.date}</p>
+              <p className="text-gray-600">
+                Date: {new Date(order.date).toLocaleString()}
+              </p>
               <p className="text-gray-600">Amount: ₹{order.total_amount}</p>
               {order.review ? (
                 <div className="mt-2">

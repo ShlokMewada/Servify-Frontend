@@ -73,13 +73,13 @@ const EmployeeDashboard = () => {
   };
 
   const ServiceTable = ({ data }) => (
-    <div className="overflow-x-auto">
+    <div className="overflow-x-auto overflow-y-auto max-h-[350px] pr-2 scrollbar-thin scrollbar-thumb-gray-400 scrollbar-track-gray-100">
       <table className="w-full border-collapse">
         <thead>
           <tr className="bg-gray-100">
             <th className="p-3 text-left">ID</th>
-            <th className="p-3 text-left">Service</th>
-            <th className="p-3 text-left">Customer</th>
+            <th className="p-3 text-left">Service ID</th>
+            <th className="p-3 text-left">Customer ID</th>
             <th className="p-3 text-left">Status</th>
             <th className="p-3 text-left">Date</th>
             <th className="p-3 text-left">Action</th>
@@ -94,7 +94,7 @@ const EmployeeDashboard = () => {
               <td className="p-3">
                 <StatusBadge status={item.status} />
               </td>
-              <td className="p-3">{item.date}</td>
+              <td className="p-3">{new Date(item.date).toLocaleString()}</td>
               {item.status === "pending" && (
                 <td className="p-4">
                   {" "}
@@ -146,11 +146,11 @@ const EmployeeDashboard = () => {
       <h2 className="text-xl font-bold mb-4 text-gray-800">
         Recent Activities
       </h2>
-      <ul className="space-y-3">
+      <ul className="space-y-3 overflow-y-auto max-h-[350px] pr-2 scrollbar-thin scrollbar-thumb-gray-400 scrollbar-track-gray-100">
         {activities.map((activity) => (
           <li key={activity.id} className="border-b border-gray-200 pb-2">
-            <p className="text-gray-600">{activity.service}</p>
-            <small className="text-gray-400">{activity.status}</small>
+            <p className="text-gray-600">Service ID : {activity.service}</p>
+            <small className="text-gray-400">Status : {activity.status}</small>
           </li>
         ))}
       </ul>
