@@ -3,7 +3,6 @@ import axiosInstance, {
 } from "../utils/axiosInstance";
 import { useRef, useState } from "react";
 import { checkValidDataSignUp } from "../utils/validate";
-import GoogleAuth from "./GoogleAuth";
 import { useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
 import { useDispatch, useSelector } from "react-redux";
@@ -313,13 +312,6 @@ const Signup = ({ isEmployee }) => {
         >
           Sign Up
         </button>
-
-        <div className="flex flex-col items-center gap-y-2">
-          <p className="text-sm font-medium text-gray-700">
-            Sign Up Using Google
-          </p>
-          <GoogleAuth isSignIn={false} role={false} />
-        </div>
 
         {!isEmployee ? (
           <div className="flex justify-center gap-x-1 text-sm">

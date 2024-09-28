@@ -3,7 +3,6 @@ import axiosInstance, {
 } from "../utils/axiosInstance";
 import { useRef, useState } from "react";
 import { checkValidDataSignIn } from "../utils/validate";
-import GoogleAuth from "./GoogleAuth";
 import { useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
 import { addUser } from "../utils/userSlice";
@@ -28,7 +27,6 @@ const Login = ({ isEmployee }) => {
   };
 
   const handleSubmit = async () => {
-    // console.log(role); <<Role Check Console Log>>
 
     const message = checkValidDataSignIn(
       email.current.value,
@@ -120,13 +118,6 @@ const Login = ({ isEmployee }) => {
         >
           Sign In
         </button>
-
-        <div className="flex flex-col items-center gap-y-2">
-          <p className="text-sm font-medium text-gray-700">
-            Sign In Using Google:
-          </p>
-          <GoogleAuth isSignIn={true} role={false} />
-        </div>
 
         {!isEmployee ? (
           <div className="flex justify-center gap-x-1 text-sm">
